@@ -96,31 +96,22 @@
 
     .big-love-text {
       position: fixed;
+      bottom: 60px;
       left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 85vw;
+      transform: translateX(-50%);
+      max-width: 90vw;
       text-align: center;
       color: #ffd6e5;
-      font-size: 1.15rem;
+      font-size: 0.85rem;
       line-height: 1.5;
       font-style: italic;
-      padding: 22px;
-      background: rgba(0,0,0,0.55);
-      border-radius: 18px;
+      padding: 18px;
+      background: rgba(0,0,0,0.45);
+      border-radius: 16px;
       backdrop-filter: blur(6px);
-      z-index: 10;
+      opacity: 0;
       animation: fadeIn 2s ease forwards;
-    }
-
-    .big-love-text.stuck-bottom {
-      top: auto;
-      bottom: 60px;
-      transform: translateX(-50%);
-      font-size: 0.8rem;
-      max-width: 90vw;
-      opacity: 0.85;
-      transition: all 1.8s ease;
+      z-index: 10;
     }
 
     .signature {
@@ -219,10 +210,6 @@
         Tu l’accordes.
       `;
       document.body.appendChild(el);
-
-      setTimeout(() => {
-        el.classList.add("stuck-bottom");
-      }, 4000);
     }
 
     function handleInteraction(x, y) {
