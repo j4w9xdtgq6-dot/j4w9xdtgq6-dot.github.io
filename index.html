@@ -180,6 +180,7 @@ h1 {
 
   let touchCount = 0;
   let bigMessageShown = false;
+  let isTouching = false;
 
   function vibrate() { if(navigator.vibrate) navigator.vibrate(30); }
 
@@ -223,11 +224,27 @@ Tu l’accordes.`;
     }
   }
 
-  document.addEventListener("click", e => handleClick(e.clientX, e.clientY));
-  document.addEventListener("touchstart", e => {
+  document.addEventListener("mousedown", e => { 
+    isTouching = true;
+    handleClick(e.clientX, e.clientY);
+  });
+  document.addEventListener("mousemove", e => { 
+    if(isTouching) handleClick(e.clientX, e.clientY);
+  });
+  document.addEventListener("mouseup", () => isTouching = false);
+
+  document.addEventListener("touchstart", e => { 
+    isTouching = true;
     const t = e.touches[0];
     handleClick(t.clientX, t.clientY);
   });
+  document.addEventListener("touchmove", e => {
+    if(isTouching) {
+      const t = e.touches[0];
+      handleClick(t.clientX, t.clientY);
+    }
+  });
+  document.addEventListener("touchend", () => isTouching = false);
 
   // Horloge
   const startDate = new Date("2025-03-07T04:00:00");
