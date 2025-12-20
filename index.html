@@ -20,6 +20,7 @@ body {
   background: radial-gradient(circle at top, #1b1b2f, #000);
   background-size: 200% 200%;
   animation: backgroundPulse 30s ease infinite;
+  transition: background 0.5s ease;
 }
 
 @keyframes backgroundPulse {
@@ -62,13 +63,6 @@ h1 {
   animation-delay: 1.5s;
 }
 
-.petit-mot {
-  margin-top: 20px;
-  font-size: 0.95rem;
-  font-style: italic;
-  opacity: 1;
-}
-
 .heart, .click-heart, .love-text, .particle {
   position: fixed;
   pointer-events: none;
@@ -90,13 +84,13 @@ h1 {
 
 .click-heart {
   font-size: 20px;
-  color: rgba(255, 90, 130, 0.9);
+  color: rgba(255, 50, 100, 0.9);
   animation: popHeart 1.4s ease forwards;
 }
 
 .love-text {
   font-size: 1rem;
-  color: rgba(255, 200, 220, 0.95);
+  color: rgba(255, 100, 140, 0.95);
   animation: popHeart 2s ease forwards;
 }
 
@@ -105,6 +99,7 @@ h1 {
   border-radius: 50%;
   opacity: 0.8;
   animation: particleFloat 1.5s ease forwards, breatheParticle 2s ease-in-out infinite alternate;
+  background: rgba(255, 80, 120, 0.9);
 }
 
 @keyframes particleFloat {
@@ -118,7 +113,10 @@ h1 {
 }
 
 .big-love-text {
-  margin-top: 15px;
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
   max-width: 90vw;
   text-align: center;
   color: #ffd6e5;
@@ -129,27 +127,14 @@ h1 {
   background: rgba(0,0,0,0.45);
   border-radius: 16px;
   backdrop-filter: blur(6px);
-  opacity: 1;
-  animation: fadeInPulse 2s ease forwards;
+  opacity: 0;
+  animation: slideUpFade 1.5s forwards;
   white-space: pre-wrap;
 }
 
-@keyframes fadeInPulse {
-  0% { transform: scale(0.9); opacity: 0; }
-  50% { transform: scale(1.05); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-.signature {
-  position: fixed;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.7rem;
-  opacity: 0.45;
-  font-style: italic;
-  pointer-events: none;
-  z-index: 5;
+@keyframes slideUpFade {
+  0% { transform: translateX(-50%) translateY(30px); opacity: 0; }
+  100% { transform: translateX(-50%) translateY(0); opacity: 1; }
 }
 
 .clock {
@@ -191,13 +176,9 @@ h1 {
 <div class="container">
   <h1>Je t’aime ❤️</h1>
   <img src="loulou%20cadre.png" alt="Nous deux" class="photo">
-  <div class="petit-mot">profite bien de tes petits bons ❤️</div>
 </div>
 
 <div class="clock"></div>
-<div class="signature">
-  site créé par Valentin, ton amoureux ❤️
-</div>
 
 <script>
   // Cœurs flottants
@@ -217,14 +198,21 @@ h1 {
 
   function vibrate() { if (navigator.vibrate) navigator.vibrate(30); }
 
-  function createHeart(x, y) {
-    const el = document.createElement("div");
-    el.className = "click-heart";
-    el.innerHTML = "❤";
-    el.style.left = x - 10 + "px";
-    el.style.top = y - 10 + "px";
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 1400);
+  function createArcHearts(x, y) {
+    const hearts = [];
+    const count = 6;
+    for(let i=0; i<count; i++){
+      const h = document.createElement('div');
+      h.className = 'click-heart';
+      h.innerHTML = '❤';
+      const angle = -60 + (i * 24); 
+      const radius = 40 + Math.random()*20;
+      h.style.left = (x + radius * Math.cos(angle * Math.PI/180)) + 'px';
+      h.style.top = (y + radius * Math.sin(angle * Math.PI/180)) + 'px';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 1200);
+      hearts.push(h);
+    }
   }
 
   function createLoveText(x, y) {
@@ -242,7 +230,6 @@ h1 {
     p.className = "particle";
     p.style.left = x + "px";
     p.style.top = y + "px";
-    p.style.background = `hsl(${Math.random()*360}, 80%, 75%)`;
     document.body.appendChild(p);
     setTimeout(() => p.remove(), 1500);
   }
@@ -263,16 +250,24 @@ Tu l’accordes.`;
       if (index < text.length) {
         el.textContent += text[index];
         index++;
-        setTimeout(type, 30); // vitesse de frappe
+        setTimeout(type, 30);
       }
     }
     type();
+  }
+
+  function pulseBackground() {
+    document.body.style.background = "radial-gradient(circle at top, #ffb6c1, #1b1b2f)";
+    setTimeout(() => {
+      document.body.style.background = "radial-gradient(circle at top, #1b1b2f, #000)";
+    }, 300);
   }
 
   function handleInteraction(x, y) {
     touchCount++;
     vibrate();
     createParticle(x, y);
+    pulseBackground();
 
     if (touchCount === 100 && !bigMessageShown) {
       bigMessageShown = true;
@@ -281,7 +276,7 @@ Tu l’accordes.`;
     }
 
     if (Math.random() < 0.1) createLoveText(x, y);
-    else createHeart(x, y);
+    else createArcHearts(x, y);
   }
 
   document.addEventListener("click", e => handleInteraction(e.clientX, e.clientY));
