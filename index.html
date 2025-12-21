@@ -5,6 +5,8 @@
 <title>Je t’aime</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
 <style>
 html, body {
   margin: 0;
@@ -37,21 +39,17 @@ html, body {
 .intro-btn {
   background: linear-gradient(135deg, #ff2d55, #c70039);
   color: #fff;
-  font-size: 2.2rem;
-  padding: 22px 44px;
+  font-size: 2.3rem;
+  padding: 22px 48px;
   border-radius: 60px;
   border: none;
   cursor: pointer;
-  font-family: Georgia, serif;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 1px;
   box-shadow: 0 20px 60px rgba(255, 45, 85, 0.5);
   animation: pulse 2s infinite;
 }
 
-.intro-btn:active {
-  transform: scale(0.96);
-}
-
-/* PULSE */
 @keyframes pulse {
   0% { box-shadow: 0 0 0 0 rgba(255,45,85,0.7); }
   70% { box-shadow: 0 0 0 30px rgba(255,45,85,0); }
@@ -106,6 +104,36 @@ h1 {
   opacity: 0;
   animation: fadeIn 2s ease forwards;
   animation-delay: 0.8s;
+}
+
+/* TIMER */
+.love-timer {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  opacity: 0.65;
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.love-timer span {
+  font-variant-numeric: tabular-nums;
+}
+
+/* SIGNATURE */
+.footer-signature {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  opacity: 0.45;
+  font-style: italic;
+  z-index: 2;
+  pointer-events: none;
 }
 
 /* COEURS */
@@ -167,13 +195,24 @@ h1 {
 <!-- PAGE 1 -->
 <section class="section">
   <h1>Je t’aime ❤️</h1>
-  <div class="subtitle">profite bien de tes petits bons </div>
+  <div class="subtitle">profite bien de tes petits bons ❤️</div>
 </section>
 
 <!-- PAGE 2 -->
 <section class="section">
   <img src="loulou%20cadre.png" class="photo" alt="Nous deux">
 </section>
+
+<!-- TIMER -->
+<div class="love-timer">
+  <div>Depuis le début de nous ❤️</div>
+  <span id="timer"></span>
+</div>
+
+<!-- SIGNATURE -->
+<div class="footer-signature">
+  site créé par Valentin pour Lou, par amour ❤️
+</div>
 
 <!-- COEURS FLOTTANTS -->
 <script>
@@ -188,13 +227,43 @@ for (let i = 0; i < 14; i++) {
 }
 </script>
 
-<!-- INTERACTIONS + INTRO -->
+<!-- INTERACTIONS + INTRO + TIMER -->
 <script>
-let drawing = false;
+/* DATE DE DÉBUT DU COUPLE ❤️ */
+const startDate = new Date(2025, 3, 21, 0, 0, 1); // 21/04/2025 à 00:00:01
 
-function vibrate() {
-  if (navigator.vibrate) navigator.vibrate(25);
+function updateTimer() {
+  const now = new Date();
+  let diff = now - startDate;
+
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  const years = Math.floor(days / 365);
+  const months = Math.floor((days % 365) / 30);
+  const remainingDays = days % 30;
+
+  const h = hours % 24;
+  const m = minutes % 60;
+  const s = seconds % 60;
+
+  document.getElementById("timer").textContent =
+    `${years}a ${months}m ${remainingDays}j ${h}h ${m}min ${s}s`;
 }
+
+updateTimer();
+setInterval(updateTimer, 1000);
+
+/* INTRO */
+document.querySelector(".intro-btn").addEventListener("click", () => {
+  if (navigator.vibrate) navigator.vibrate(25);
+  document.getElementById("intro").classList.add("hidden");
+});
+
+/* INTERACTIONS */
+let drawing = false;
 
 function createHeart(x, y) {
   const h = document.createElement("div");
@@ -215,16 +284,8 @@ function createTrail(x, y) {
   setTimeout(() => t.remove(), 600);
 }
 
-/* INTRO */
-document.querySelector(".intro-btn").addEventListener("click", () => {
-  vibrate();
-  document.getElementById("intro").classList.add("hidden");
-});
-
-/* SOURIS */
 document.addEventListener("mousedown", e => {
   drawing = true;
-  vibrate();
   createHeart(e.clientX, e.clientY);
 });
 document.addEventListener("mousemove", e => {
@@ -232,10 +293,8 @@ document.addEventListener("mousemove", e => {
 });
 document.addEventListener("mouseup", () => drawing = false);
 
-/* TOUCH */
 document.addEventListener("touchstart", e => {
   drawing = true;
-  vibrate();
   const t = e.touches[0];
   createHeart(t.clientX, t.clientY);
 });
