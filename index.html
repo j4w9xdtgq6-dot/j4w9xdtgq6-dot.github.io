@@ -16,7 +16,50 @@ html, body {
   overflow-x: hidden;
 }
 
-/* SECTIONS */
+/* ================= ÉCRAN D'ENTRÉE ================= */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #1b1b2f, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+
+#intro.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* BOUTON */
+.intro-btn {
+  background: linear-gradient(135deg, #ff2d55, #c70039);
+  color: #fff;
+  font-size: 2.2rem;
+  padding: 22px 44px;
+  border-radius: 60px;
+  border: none;
+  cursor: pointer;
+  font-family: Georgia, serif;
+  box-shadow: 0 20px 60px rgba(255, 45, 85, 0.5);
+  animation: pulse 2s infinite;
+}
+
+.intro-btn:active {
+  transform: scale(0.96);
+}
+
+/* PULSE */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,45,85,0.7); }
+  70% { box-shadow: 0 0 0 30px rgba(255,45,85,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,45,85,0); }
+}
+
+/* ================= SITE ================= */
+
 .section {
   min-height: 100vh;
   display: flex;
@@ -28,7 +71,6 @@ html, body {
   position: relative;
 }
 
-/* FONDU ENTRE PAGES */
 .section::after {
   content: "";
   position: absolute;
@@ -66,7 +108,7 @@ h1 {
   animation-delay: 0.8s;
 }
 
-/* COEURS FLOTTANTS */
+/* COEURS */
 .heart {
   position: fixed;
   bottom: -10vh;
@@ -77,7 +119,6 @@ h1 {
   z-index: 1;
 }
 
-/* COEURS AU TOUCHER */
 .click-heart {
   position: fixed;
   font-size: 20px;
@@ -87,7 +128,6 @@ h1 {
   z-index: 3;
 }
 
-/* LIGNE ROSE */
 .trail {
   position: fixed;
   width: 6px;
@@ -98,6 +138,7 @@ h1 {
   z-index: 4;
 }
 
+/* ANIMS */
 @keyframes floatUp {
   from { transform: translateY(0); opacity: 0; }
   15% { opacity: 1; }
@@ -117,6 +158,11 @@ h1 {
 </head>
 
 <body>
+
+<!-- ÉCRAN D'ENTRÉE -->
+<div id="intro">
+  <button class="intro-btn">Lou, appuie ❤️</button>
+</div>
 
 <!-- PAGE 1 -->
 <section class="section">
@@ -142,12 +188,12 @@ for (let i = 0; i < 14; i++) {
 }
 </script>
 
-<!-- INTERACTIONS -->
+<!-- INTERACTIONS + INTRO -->
 <script>
 let drawing = false;
 
 function vibrate() {
-  if (navigator.vibrate) navigator.vibrate(20);
+  if (navigator.vibrate) navigator.vibrate(25);
 }
 
 function createHeart(x, y) {
@@ -169,31 +215,35 @@ function createTrail(x, y) {
   setTimeout(() => t.remove(), 600);
 }
 
+/* INTRO */
+document.querySelector(".intro-btn").addEventListener("click", () => {
+  vibrate();
+  document.getElementById("intro").classList.add("hidden");
+});
+
+/* SOURIS */
 document.addEventListener("mousedown", e => {
   drawing = true;
   vibrate();
   createHeart(e.clientX, e.clientY);
 });
-
 document.addEventListener("mousemove", e => {
   if (drawing) createTrail(e.clientX, e.clientY);
 });
-
 document.addEventListener("mouseup", () => drawing = false);
 
+/* TOUCH */
 document.addEventListener("touchstart", e => {
   drawing = true;
   vibrate();
   const t = e.touches[0];
   createHeart(t.clientX, t.clientY);
 });
-
 document.addEventListener("touchmove", e => {
   if (!drawing) return;
   const t = e.touches[0];
   createTrail(t.clientX, t.clientY);
 });
-
 document.addEventListener("touchend", () => drawing = false);
 </script>
 
