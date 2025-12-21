@@ -7,265 +7,194 @@
 
 <style>
 html, body {
-  margin: 0; padding: 0;
-  width: 100%; height: 100%;
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #000;
   font-family: Georgia, serif;
   color: #fff;
-  background: radial-gradient(circle at top, #1b1b2f, #000);
+  overflow-x: hidden;
 }
 
-body {
-  position: relative;
+/* SECTIONS */
+.section {
   min-height: 100vh;
-}
-
-.container {
-  position: relative;
-  z-index: 2;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   text-align: center;
-  min-height: 100vh;
-  justify-content: center;
+  padding: 40px 16px;
+  position: relative;
 }
 
-h1 {
-  font-size: 3.8rem;
-  margin-bottom: 20px;
-  opacity: 0;
-  transform: translateY(-20px);
-  animation: fadeIn 2s ease forwards;
-  text-shadow: 0 6px 20px rgba(0,0,0,0.7);
-}
-
-.photo {
+/* FONDU ENTRE PAGES */
+.section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  height: auto;
-  max-height: 60vh;
-  object-fit: contain;
+  height: 120px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0), #000);
+}
+
+/* PAGE 1 */
+h1 {
+  font-size: 4rem;
+  margin-bottom: 12px;
+  animation: fadeIn 2s ease forwards;
+}
+
+.subtitle {
+  font-size: 1rem;
+  font-style: italic;
   opacity: 0;
-  transform: scale(0.96);
-  animation: fadeInImage 2s ease forwards;
+  animation: fadeIn 2s ease forwards;
   animation-delay: 1.5s;
 }
 
-.petit-mot {
-  margin-top: 24px;
-  font-size: 0.95rem;
-  font-style: italic;
+/* PAGE 2 */
+.photo {
+  width: 100%;
+  max-width: 1100px;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: 22px;
+  box-shadow: 0 40px 90px rgba(0,0,0,0.8);
+  opacity: 0;
+  animation: fadeIn 2s ease forwards;
+  animation-delay: 0.8s;
 }
 
-.footer-text {
+/* COEURS FLOTTANTS */
+.heart {
   position: fixed;
-  bottom: 10px;
-  font-size: 0.85rem;
-  opacity: 0.7;
-}
-
-.heart, .click-heart {
-  position: fixed;
+  bottom: -10vh;
+  font-size: 16px;
+  color: rgba(255, 90, 130, 0.2);
+  animation: floatUp linear infinite;
   pointer-events: none;
+  z-index: 1;
+}
+
+/* COEURS AU TOUCHER */
+.click-heart {
+  position: fixed;
+  font-size: 20px;
+  color: rgba(255, 90, 130, 0.9);
+  pointer-events: none;
+  animation: popHeart 1.4s ease forwards;
   z-index: 3;
 }
 
-.heart {
-  bottom: -10vh;
-  font-size: 16px;
-  color: rgba(255, 90, 130, 0.22);
-  animation: floatUp linear infinite, breathe 4s ease-in-out infinite alternate;
-}
-
-.click-heart {
-  font-size: 20px;
-  color: rgba(255, 50, 100, 0.9);
-  animation: popHeart 1.4s ease forwards, pulseHeart 1s ease-in-out;
-}
-
-.big-love-text {
+/* LIGNE ROSE */
+.trail {
   position: fixed;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%) translateY(30px);
-  max-width: 90vw;
-  text-align: center;
-  color: #ffd6e5;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  font-style: italic;
-  padding: 12px;
-  background: rgba(0,0,0,0.45);
-  border-radius: 16px;
-  backdrop-filter: blur(6px);
-  opacity: 0;
-  animation: slideUpFade 1.5s forwards;
-  white-space: pre-wrap;
-}
-
-.clock {
-  position: fixed;
-  top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.9rem;
-  opacity: 0.85;
-  z-index: 5;
-  font-style: italic;
-  white-space: nowrap;
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 90, 130, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 4;
 }
 
 @keyframes floatUp {
-  from { transform: translateY(0) scale(1); opacity: 0; }
+  from { transform: translateY(0); opacity: 0; }
   15% { opacity: 1; }
-  to { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+  to { transform: translateY(-120vh); opacity: 0; }
 }
 
 @keyframes popHeart {
-  0% { transform: scale(0.3); opacity: 0; }
-  20% { opacity: 1; transform: scale(1); }
-  100% { transform: translateY(-80px) scale(1.3); opacity: 0; }
-}
-
-@keyframes pulseHeart {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.3); }
-  100% { transform: scale(1); }
+  0% { transform: scale(0.4); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(-80px) scale(1.4); opacity: 0; }
 }
 
 @keyframes fadeIn {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInImage {
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes breathe {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.25); }
-  100% { transform: scale(1); }
-}
-
-@keyframes slideUpFade {
-  0% { transform: translateX(-50%) translateY(30px); opacity: 0; }
-  100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+  to { opacity: 1; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- PAGE 1 -->
+<section class="section">
   <h1>Je t’aime ❤️</h1>
-  <img src="loulou%20cadre.png" alt="Nous deux" class="photo">
-  <div class="petit-mot">profite bien de tes petits bons</div>
-</div>
+  <div class="subtitle">profite bien de tes petits bons ❤️</div>
+</section>
 
-<div class="footer-text">site créé par Valentin, ton kangourou</div>
-<div class="clock">On s'est rencontré depuis: <span id="timer"></span></div>
+<!-- PAGE 2 -->
+<section class="section">
+  <img src="loulou%20cadre.png" class="photo" alt="Nous deux">
+</section>
 
+<!-- COEURS FLOTTANTS -->
 <script>
-  // Cœurs flottants
-  for (let i = 0; i < 14; i++) {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = 18 + Math.random() * 12 + "s";
-    heart.style.fontSize = 12 + Math.random() * 16 + "px";
-    heart.style.animationDelay = Math.random() * 10 + "s";
-    document.body.appendChild(heart);
-  }
+for (let i = 0; i < 14; i++) {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "❤";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.animationDuration = 18 + Math.random() * 12 + "s";
+  h.style.fontSize = 12 + Math.random() * 16 + "px";
+  document.body.appendChild(h);
+}
+</script>
 
-  let touchCount = 0;
-  let bigMessageShown = false;
-  let isTouching = false;
+<!-- INTERACTIONS -->
+<script>
+let drawing = false;
 
-  function vibrate() { if(navigator.vibrate) navigator.vibrate(30); }
+function vibrate() {
+  if (navigator.vibrate) navigator.vibrate(20);
+}
 
-  function createClickHeart(x, y) {
-    const heart = document.createElement("div");
-    heart.className = "click-heart";
-    heart.innerHTML = "❤";
-    heart.style.left = x - 10 + "px";
-    heart.style.top = y - 10 + "px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 1400);
-  }
+function createHeart(x, y) {
+  const h = document.createElement("div");
+  h.className = "click-heart";
+  h.innerHTML = "❤";
+  h.style.left = x - 10 + "px";
+  h.style.top = y - 10 + "px";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 1400);
+}
 
-  function showBigMessage() {
-    const container = document.querySelector('.container');
-    const el = document.createElement("div");
-    el.className = "big-love-text";
-    container.appendChild(el);
-    el.textContent = `Quand je suis près de toi, c’est comme si le monde trouvait enfin sa fréquence.
-Je respire mieux, je rêve mieux, je vis mieux.
-Je t’aime parce que tu ne changes pas ma vie :
-Tu l’accordes.`;
-  }
+function createTrail(x, y) {
+  const t = document.createElement("div");
+  t.className = "trail";
+  t.style.left = x + "px";
+  t.style.top = y + "px";
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 600);
+}
 
-  function handleClick(x, y) {
-    touchCount++;
-    vibrate();
-    createClickHeart(x, y);
+document.addEventListener("mousedown", e => {
+  drawing = true;
+  vibrate();
+  createHeart(e.clientX, e.clientY);
+});
 
-    if(touchCount === 100 && !bigMessageShown){
-      bigMessageShown = true;
-      showBigMessage();
-    } else if(Math.random() < 0.1){
-      const el = document.createElement("div");
-      el.className = "click-heart";
-      el.textContent = "Je t’aime";
-      el.style.left = x + "px";
-      el.style.top = y + "px";
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 1400);
-    }
-  }
+document.addEventListener("mousemove", e => {
+  if (drawing) createTrail(e.clientX, e.clientY);
+});
 
-  document.addEventListener("mousedown", e => { 
-    isTouching = true;
-    handleClick(e.clientX, e.clientY);
-  });
-  document.addEventListener("mousemove", e => { 
-    if(isTouching) handleClick(e.clientX, e.clientY);
-  });
-  document.addEventListener("mouseup", () => isTouching = false);
+document.addEventListener("mouseup", () => drawing = false);
 
-  document.addEventListener("touchstart", e => { 
-    isTouching = true;
-    const t = e.touches[0];
-    handleClick(t.clientX, t.clientY);
-  });
-  document.addEventListener("touchmove", e => {
-    if(isTouching) {
-      const t = e.touches[0];
-      handleClick(t.clientX, t.clientY);
-    }
-  });
-  document.addEventListener("touchend", () => isTouching = false);
+document.addEventListener("touchstart", e => {
+  drawing = true;
+  vibrate();
+  const t = e.touches[0];
+  createHeart(t.clientX, t.clientY);
+});
 
-  // Horloge
-  const startDate = new Date("2025-03-07T04:00:00");
-  const timerEl = document.getElementById("timer");
+document.addEventListener("touchmove", e => {
+  if (!drawing) return;
+  const t = e.touches[0];
+  createTrail(t.clientX, t.clientY);
+});
 
-  function updateClock() {
-    const now = new Date();
-    let delta = now - startDate;
-
-    const sec = Math.floor(delta/1000) % 60;
-    const min = Math.floor(delta/60000) % 60;
-    const hour = Math.floor(delta/3600000) % 24;
-    const day = Math.floor(delta/(1000*60*60*24)) % 30;
-    const month = Math.floor(delta/(1000*60*60*24*30)) % 12;
-    const year = Math.floor(delta/(1000*60*60*24*365));
-
-    timerEl.textContent = `${year} ans ${month} mois ${day} jours ${hour}h ${min}m ${sec}s`;
-  }
-
-  setInterval(updateClock, 1000);
-  updateClock();
+document.addEventListener("touchend", () => drawing = false);
 </script>
 
 </body>
