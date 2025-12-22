@@ -159,6 +159,7 @@ h1 {
   font-size: 0.75rem;
   opacity: 0.7;
   z-index: 8;
+  text-align: center;
 }
 
 .footer-signature {
@@ -307,7 +308,7 @@ Et quoi qu’il arrive, peu importe le moment ou la situation, je serai toujours
 Je t’aime.
 
 Ton Valentin
-  </div>
+    </div>
 </div>
 
 <!-- TIMER -->
@@ -348,20 +349,26 @@ secretHeart.onclick = () => {
 document.querySelector(".close-letter").onclick = () =>
   letterPage.style.display = "none";
 
-/* EMOJIS */
-for (let i=0;i<24;i++){
-  const e=document.createElement("div");
-  e.className="heart";
-  e.innerHTML=Math.random()<0.08?"🦘":"❤️";
-  e.style.left=Math.random()*100+"vw";
-  e.style.fontSize=12+Math.random()*18+"px";
-  e.style.animationDuration=14+Math.random()*10+"s";
-  document.body.appendChild(e);
+/* COEURS AU CLIC / TOUCH */
+function spawnClickHeart(x, y) {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = Math.random() < 0.05 ? "🦘" : "❤️";
+  h.style.left = x + "px";
+  h.style.top = y + "px";
+  h.style.fontSize = (14 + Math.random() * 16) + "px";
+  h.style.animationDuration = (1.8 + Math.random()) + "s";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 2000);
 }
-</script>
 
-</body>
-</html>
+document.addEventListener("click", e => {
+  spawnClickHeart(e.clientX, e.clientY);
+});
+document.addEventListener("touchstart", e => {
+  const t = e.touches[0];
+  spawnClickHeart(t.clientX, t.clientY);
+});
 </script>
 
 </body>
