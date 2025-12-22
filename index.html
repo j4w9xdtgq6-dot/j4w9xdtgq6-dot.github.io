@@ -18,7 +18,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ================= INTRO ================= */
+/* INTRO */
 #intro {
   position: fixed;
   inset: 0;
@@ -44,7 +44,13 @@ html, body {
   animation: pulse 2s infinite;
 }
 
-/* ================= SECTIONS ================= */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* SECTIONS */
 .section {
   min-height: 100vh;
   display: flex;
@@ -73,6 +79,7 @@ h1 {
   opacity: 0.8;
 }
 
+/* IMAGE */
 .photo {
   width: 100%;
   max-width: 1100px;
@@ -84,7 +91,7 @@ h1 {
   z-index: 6;
 }
 
-/* ================= ZOOM IMAGE ================= */
+/* ZOOM IMAGE */
 #zoomOverlay {
   position: fixed;
   inset: 0;
@@ -108,7 +115,7 @@ h1 {
   cursor: zoom-out;
 }
 
-/* ================= LETTRE SECRÈTE ================= */
+/* LETTRE SECRÈTE */
 #letterPage {
   position: fixed;
   inset: 0;
@@ -143,7 +150,7 @@ h1 {
   opacity: 0.6;
 }
 
-/* ================= TIMER & SIGNATURE ================= */
+/* TIMER + SIGNATURE */
 .love-timer {
   position: fixed;
   bottom: 56px;
@@ -165,7 +172,7 @@ h1 {
   z-index: 8;
 }
 
-/* ================= EMOJIS ================= */
+/* EMOJIS */
 .heart {
   position: fixed;
   bottom: -10vh;
@@ -191,7 +198,7 @@ h1 {
 <!-- PAGE 1 -->
 <section class="section">
   <h1 id="secretHeart">Je t’aime ❤️</h1>
-  <div class="subtitle">profite bien de tes petits bons ^^ </div>
+  <div class="subtitle">profite bien de tes petits bons ❤️</div>
 </section>
 
 <!-- PAGE 2 -->
@@ -204,7 +211,7 @@ h1 {
   <img src="loulou%20cadre.png">
 </div>
 
-<!-- LETTRE -->
+<!-- LETTRE SECRÈTE -->
 <div id="letterPage">
   <div class="close-letter">✕</div>
   <h2>Lettre qui t’est destinée</h2>
@@ -218,9 +225,84 @@ Et plus le temps passe, plus les choses deviennent claires pour moi.
 Quand je suis avec toi, je ne fais plus de cauchemars, je rêve.
 Et quand tu n’es pas là… tout sonne différemment.
 
-Si tu te demandes comment je te décrirais…
+Si tu te demandes comment je te décrirais… j’ai longtemps parlé de toi au monde juste avec mon ressenti, sans jamais vraiment trouver les bons mots.
+Mais au fond, comment te décrire autrement que comme ce que tu es vraiment ?
 
-[texte intégral conservé mot pour mot]
+Lou, c’est Lou.
+Mon amour.
+Ma meilleure amie.
+Ma confidente.
+Mon âme sœur.
+Ma lumière.
+
+Lou, c’est toi.
+Parce que c’est toi qui apaise ou agite mes nuits,
+toi qui éclaires mes journées,
+toi qui manques même quand tout le monde est là,
+toi qui comptes quand plus rien ne compte.
+
+Tu n’as rien fait pour que je t’aime.
+Tu as juste été toi, et c’était déjà assez.
+C’était déjà tout pour ma tête,
+c’était déjà trop pour mon cœur,
+c’était déjà suffisant pour savoir.
+Savoir que c’est toi et pas une autre.
+Toi et pas une autre.
+Toi et pas une autre.
+Toi et pas une autre.
+Toi.
+
+Je ne t’ai pas aimée parce que tu as essayé de me plaire.
+Je t’ai aimée parce que tu étais vraie,
+parce que tu étais toi, simplement toi.
+
+Et ça m’a suffi.
+Ça a tout changé.
+Ça a renversé mes certitudes.
+
+J’ai compris sans réfléchir,
+sans hésiter,
+que c’était toi que mon cœur reconnaissait,
+toi que mes mains cherchaient,
+toi que mon âme choisissait.
+
+Toi, encore toi,
+toujours toi,
+juste toi.
+
+Tu sais, ce qui me touche le plus,
+c’est que même quand la distance s’étire entre nous,
+tu restes mon endroit préféré.
+
+Il me suffit de fermer les yeux pour te rejoindre :
+ta voix qui m’adoucit,
+ta chaleur qui me rassure,
+ta façon de me regarder comme si j’étais exactement là où je devais être.
+
+Tu es cette douceur qui apaise tout en moi,
+celle qui calme mes doutes sans même parler.
+Avec toi, je me sens léger, vrai, vivant.
+Et même quand tu n’es pas là, il reste quelque chose de toi,
+comme une chaleur discrète qui continue de m’accompagner.
+
+J’aime même m’ennuyer avec toi.
+J’en rêvais sans vraiment savoir où trouver ce genre de relation, ni comment y parvenir.
+Et malgré les hauts et les bas, j’ai l’impression qu’on touche du doigt tout ce que j’ai toujours espéré.
+Avec toi, je me sens vraiment au bon endroit.
+
+Je crois que tu ne réalises pas toujours le bien que tu as fait autour de toi, et en moi.
+Juste en étant là, tu as changé beaucoup de choses.
+
+Je sais que tu as souffert, que tu souffres encore parfois, et que tout ça demande du temps et des efforts.
+Je sais aussi que tu es une personne forte, même quand certaines fragilités restent silencieuses.
+
+Mais il y a une chose que je veux que tu n’oublies jamais :
+tu n’es jamais un poids pour moi.
+Et si un jour tu as envie de parler, je serai là, sans pression, sans attente, simplement là.
+
+Je veux simplement que tu saches que depuis le début, je suis profondément heureux qu’on se soit engagés tous les deux.
+Je n’ai jamais regretté, pas une seule fois.
+Et quoi qu’il arrive, peu importe le moment ou la situation, je serai toujours là pour toi.
 
 Je t’aime.
 
@@ -240,9 +322,8 @@ Ton Valentin
 
 <script>
 /* INTRO */
-document.querySelector(".intro-btn").onclick = () => {
+document.querySelector(".intro-btn").onclick = () =>
   document.getElementById("intro").classList.add("hidden");
-};
 
 /* TIMER */
 const startDate = new Date(2025, 3, 21, 0, 0, 1);
@@ -252,25 +333,23 @@ setInterval(() => {
     `${Math.floor(d/31536000)}a ${Math.floor(d%31536000/2592000)}m ${Math.floor(d%2592000/86400)}j ${Math.floor(d%86400/3600)}h ${Math.floor(d%3600/60)}min ${d%60}s`;
 }, 1000);
 
-/* ZOOM IMAGE */
+/* ZOOM */
 mainPhoto.onclick = () => zoomOverlay.classList.add("active");
 zoomOverlay.onclick = () => zoomOverlay.classList.remove("active");
 
-/* ❤️ EASTER EGG DOUBLE TAP */
+/* EASTER EGG DOUBLE TAP */
 let lastTap = 0;
-document.getElementById("secretHeart").onclick = () => {
+secretHeart.onclick = () => {
   const now = Date.now();
-  if (now - lastTap < 400) {
-    document.getElementById("letterPage").style.display = "block";
-  }
+  if (now - lastTap < 400)
+    letterPage.style.display = "block";
   lastTap = now;
 };
-
 document.querySelector(".close-letter").onclick = () =>
-  document.getElementById("letterPage").style.display = "none";
+  letterPage.style.display = "none";
 
 /* EMOJIS */
-for (let i=0;i<22;i++){
+for (let i=0;i<24;i++){
   const e=document.createElement("div");
   e.className="heart";
   e.innerHTML=Math.random()<0.08?"🦘":"❤️";
@@ -279,6 +358,10 @@ for (let i=0;i<22;i++){
   e.style.animationDuration=14+Math.random()*10+"s";
   document.body.appendChild(e);
 }
+</script>
+
+</body>
+</html>
 </script>
 
 </body>
