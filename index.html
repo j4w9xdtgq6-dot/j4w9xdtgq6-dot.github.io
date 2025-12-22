@@ -59,7 +59,6 @@ html, body {
   align-items: center;
   text-align: center;
   padding: 40px 16px;
-  position: relative;
 }
 
 h1 {
@@ -91,16 +90,16 @@ h1 {
 /* ================= TIMER ================= */
 .love-timer {
   position: fixed;
-  bottom: 54px; /* remonté */
+  bottom: 56px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 0.75rem;
   opacity: 0.7;
   text-align: center;
-  z-index: 2;
   pointer-events: none;
 }
 
+/* ================= SIGNATURE ================= */
 .footer-signature {
   position: fixed;
   bottom: 14px;
@@ -109,6 +108,7 @@ h1 {
   font-size: 0.7rem;
   opacity: 0.45;
   font-style: italic;
+  white-space: nowrap; /* 👈 UNE SEULE LIGNE */
   pointer-events: none;
 }
 
@@ -116,61 +116,54 @@ h1 {
 .heart {
   position: fixed;
   bottom: -10vh;
-  color: rgba(255,90,130,0.25);
   animation: floatUp linear infinite;
   pointer-events: none;
   z-index: 1;
 }
 
+.heart.love {
+  color: rgba(255,90,130,0.28);
+}
+
+.heart.kangaroo {
+  color: rgba(255,255,255,0.22);
+}
+
 @keyframes floatUp {
   from { transform: translateY(0); opacity: 0; }
-  20% { opacity: 1; }
+  15% { opacity: 1; }
   to { transform: translateY(-120vh); opacity: 0; }
 }
 
-/* ================= CURSEUR ================= */
-.heart-slider {
-  position: fixed;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
-  z-index: 5;
-}
-
-.heart-slider input {
-  width: 120px;
-}
-
-/* ================= ANIMS ================= */
 @keyframes fadeIn { to { opacity: 1; } }
 </style>
 </head>
 
 <body>
 
+<!-- INTRO -->
 <div id="intro">
   <button class="intro-btn">Lou, appuie ❤️</button>
 </div>
 
+<!-- PAGE 1 -->
 <section class="section">
   <h1>Je t’aime ❤️</h1>
-  <div class="subtitle">profite bien de tes petits bons ^^ </div>
+  <div class="subtitle">profite bien de tes petits bons ❤️</div>
 </section>
 
+<!-- PAGE 2 -->
 <section class="section">
   <img src="loulou%20cadre.png" class="photo" alt="Nous deux">
 </section>
 
-<!-- CURSEUR COEURS -->
-<div class="heart-slider">
-  <input type="range" min="0" max="30" value="14" id="heartRange">
-</div>
-
+<!-- TIMER -->
 <div class="love-timer">
   <div>Nous depuis :</div>
   <div id="timer"></div>
 </div>
 
+<!-- SIGNATURE -->
 <div class="footer-signature">
   site créé par Valentin pour Lou, par amour ❤️
 </div>
@@ -198,29 +191,33 @@ function updateTimer() {
 setInterval(updateTimer, 1000);
 updateTimer();
 
-/* COEURS DYNAMIQUES */
-let hearts = [];
+/* ❤️ + 🦘 FLOTTANTS */
+const HEART_COUNT = 22;
+const KANGAROO_COUNT = 2;
 
-function generateHearts(n) {
-  hearts.forEach(h => h.remove());
-  hearts = [];
-  for (let i = 0; i < n; i++) {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "❤️";
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.fontSize = 12 + Math.random() * 18 + "px";
-    h.style.animationDuration = 16 + Math.random() * 12 + "s";
-    document.body.appendChild(h);
-    hearts.push(h);
-  }
+/* Coeurs */
+for (let i = 0; i < HEART_COUNT; i++) {
+  const h = document.createElement("div");
+  h.className = "heart love";
+  h.innerHTML = "❤️";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.fontSize = 12 + Math.random() * 18 + "px";
+  h.style.animationDuration = 14 + Math.random() * 10 + "s";
+  h.style.animationDelay = Math.random() * 10 + "s";
+  document.body.appendChild(h);
 }
 
-generateHearts(14);
-
-document.getElementById("heartRange").oninput = e => {
-  generateHearts(e.target.value);
-};
+/* Kangourous (rares & discrets) */
+for (let i = 0; i < KANGAROO_COUNT; i++) {
+  const k = document.createElement("div");
+  k.className = "heart kangaroo";
+  k.innerHTML = "🦘";
+  k.style.left = Math.random() * 100 + "vw";
+  k.style.fontSize = 14 + Math.random() * 10 + "px";
+  k.style.animationDuration = 26 + Math.random() * 12 + "s";
+  k.style.animationDelay = 20 + Math.random() * 30 + "s"; // 👈 très rare
+  document.body.appendChild(k);
+}
 </script>
 
 </body>
