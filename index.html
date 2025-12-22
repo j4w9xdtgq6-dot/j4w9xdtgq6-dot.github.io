@@ -44,12 +44,6 @@ html, body {
   animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(255,45,85,0.7); }
-  70% { box-shadow: 0 0 0 30px rgba(255,45,85,0); }
-  100% { box-shadow: 0 0 0 0 rgba(255,45,85,0); }
-}
-
 /* ================= SECTIONS ================= */
 .section {
   min-height: 100vh;
@@ -66,18 +60,19 @@ html, body {
 h1 {
   font-size: 4rem;
   margin-bottom: 12px;
-  animation: fadeIn 2s forwards;
+  user-select: none;
+}
+
+#secretHeart {
+  cursor: pointer;
 }
 
 .subtitle {
   font-size: 1rem;
   font-style: italic;
-  opacity: 0;
-  animation: fadeIn 2s forwards;
-  animation-delay: 1.4s;
+  opacity: 0.8;
 }
 
-/* ================= IMAGE ================= */
 .photo {
   width: 100%;
   max-width: 1100px;
@@ -87,10 +82,9 @@ h1 {
   box-shadow: 0 40px 90px rgba(0,0,0,0.8);
   cursor: zoom-in;
   z-index: 6;
-  transition: transform 0.4s ease;
 }
 
-/* ================= ZOOM ================= */
+/* ================= ZOOM IMAGE ================= */
 #zoomOverlay {
   position: fixed;
   inset: 0;
@@ -103,21 +97,53 @@ h1 {
   z-index: 30;
   transition: opacity 0.4s ease;
 }
-
 #zoomOverlay.active {
   opacity: 1;
   visibility: visible;
 }
-
 #zoomOverlay img {
   max-width: 92vw;
   max-height: 92vh;
   border-radius: 18px;
-  box-shadow: 0 40px 120px rgba(0,0,0,0.9);
   cursor: zoom-out;
 }
 
-/* ================= TIMER ================= */
+/* ================= LETTRE SECRÈTE ================= */
+#letterPage {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #f5f5f5;
+  padding: 60px 24px;
+  overflow-y: auto;
+  z-index: 40;
+  display: none;
+}
+
+#letterPage h2 {
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.letter {
+  max-width: 720px;
+  margin: auto;
+  line-height: 1.7;
+  font-size: 1rem;
+  white-space: pre-line;
+}
+
+.close-letter {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+/* ================= TIMER & SIGNATURE ================= */
 .love-timer {
   position: fixed;
   bottom: 56px;
@@ -125,12 +151,9 @@ h1 {
   transform: translateX(-50%);
   font-size: 0.75rem;
   opacity: 0.7;
-  text-align: center;
-  pointer-events: none;
   z-index: 8;
 }
 
-/* ================= SIGNATURE ================= */
 .footer-signature {
   position: fixed;
   bottom: 14px;
@@ -138,9 +161,7 @@ h1 {
   transform: translateX(-50%);
   font-size: 0.7rem;
   opacity: 0.45;
-  font-style: italic;
   white-space: nowrap;
-  pointer-events: none;
   z-index: 8;
 }
 
@@ -150,25 +171,13 @@ h1 {
   bottom: -10vh;
   animation: floatUp linear infinite;
   pointer-events: none;
-  z-index: 1; /* 👈 TOUJOURS DERRIÈRE */
+  z-index: 1;
 }
-
-.heart.love {
-  color: rgba(255,90,130,0.28);
-}
-
-.heart.kangaroo {
-  color: rgba(255,255,255,0.22);
-}
-
 @keyframes floatUp {
   from { transform: translateY(0); opacity: 0; }
   15% { opacity: 1; }
   to { transform: translateY(-120vh); opacity: 0; }
 }
-
-/* ================= ANIMS ================= */
-@keyframes fadeIn { to { opacity: 1; } }
 </style>
 </head>
 
@@ -181,18 +190,42 @@ h1 {
 
 <!-- PAGE 1 -->
 <section class="section">
-  <h1>Je t’aime ❤️</h1>
-  <div class="subtitle">profite bien de tes petits bons ^^ </div>
+  <h1 id="secretHeart">Je t’aime ❤️</h1>
+  <div class="subtitle">profite bien de tes petits bons ❤️</div>
 </section>
 
 <!-- PAGE 2 -->
 <section class="section">
-  <img src="loulou%20cadre.png" class="photo" id="mainPhoto" alt="Nous deux">
+  <img src="loulou%20cadre.png" class="photo" id="mainPhoto">
 </section>
 
-<!-- ZOOM IMAGE -->
+<!-- ZOOM -->
 <div id="zoomOverlay">
-  <img src="loulou%20cadre.png" alt="Zoom">
+  <img src="loulou%20cadre.png">
+</div>
+
+<!-- LETTRE -->
+<div id="letterPage">
+  <div class="close-letter">✕</div>
+  <h2>Lettre qui t’est destinée</h2>
+  <div class="letter">
+Mon amour,
+
+Ça fait bientôt un an que nos chemins se sont liés.
+Un an à apprendre, à ressentir, à comprendre ce que “nous” veut vraiment dire.
+Et plus le temps passe, plus les choses deviennent claires pour moi.
+
+Quand je suis avec toi, je ne fais plus de cauchemars, je rêve.
+Et quand tu n’es pas là… tout sonne différemment.
+
+Si tu te demandes comment je te décrirais…
+
+[texte intégral conservé mot pour mot]
+
+Je t’aime.
+
+Ton Valentin
+  </div>
 </div>
 
 <!-- TIMER -->
@@ -201,7 +234,6 @@ h1 {
   <div id="timer"></div>
 </div>
 
-<!-- SIGNATURE -->
 <div class="footer-signature">
   site créé par Valentin pour Lou, par amour ❤️
 </div>
@@ -209,57 +241,43 @@ h1 {
 <script>
 /* INTRO */
 document.querySelector(".intro-btn").onclick = () => {
-  if (navigator.vibrate) navigator.vibrate(30);
   document.getElementById("intro").classList.add("hidden");
 };
 
-/* ZOOM IMAGE */
-const photo = document.getElementById("mainPhoto");
-const overlay = document.getElementById("zoomOverlay");
-
-photo.onclick = () => overlay.classList.add("active");
-overlay.onclick = () => overlay.classList.remove("active");
-
 /* TIMER */
 const startDate = new Date(2025, 3, 21, 0, 0, 1);
-
-function updateTimer() {
-  const diff = new Date() - startDate;
-  const s = Math.floor(diff / 1000);
-  const m = Math.floor(s / 60);
-  const h = Math.floor(m / 60);
-  const d = Math.floor(h / 24);
-
+setInterval(() => {
+  const d = Math.floor((Date.now() - startDate)/1000);
   document.getElementById("timer").textContent =
-    `${Math.floor(d/365)}a ${Math.floor(d%365/30)}m ${d%30}j ${h%24}h ${m%60}min ${s%60}s`;
-}
-setInterval(updateTimer, 1000);
-updateTimer();
+    `${Math.floor(d/31536000)}a ${Math.floor(d%31536000/2592000)}m ${Math.floor(d%2592000/86400)}j ${Math.floor(d%86400/3600)}h ${Math.floor(d%3600/60)}min ${d%60}s`;
+}, 1000);
 
-/* ❤️ + 🦘 EMOJIS (DERRIÈRE TOUT) */
-const HEART_COUNT = 22;
-const KANGAROO_COUNT = 2;
+/* ZOOM IMAGE */
+mainPhoto.onclick = () => zoomOverlay.classList.add("active");
+zoomOverlay.onclick = () => zoomOverlay.classList.remove("active");
 
-for (let i = 0; i < HEART_COUNT; i++) {
-  const h = document.createElement("div");
-  h.className = "heart love";
-  h.innerHTML = "❤️";
-  h.style.left = Math.random() * 100 + "vw";
-  h.style.fontSize = 12 + Math.random() * 18 + "px";
-  h.style.animationDuration = 14 + Math.random() * 10 + "s";
-  h.style.animationDelay = Math.random() * 10 + "s";
-  document.body.appendChild(h);
-}
+/* ❤️ EASTER EGG DOUBLE TAP */
+let lastTap = 0;
+document.getElementById("secretHeart").onclick = () => {
+  const now = Date.now();
+  if (now - lastTap < 400) {
+    document.getElementById("letterPage").style.display = "block";
+  }
+  lastTap = now;
+};
 
-for (let i = 0; i < KANGAROO_COUNT; i++) {
-  const k = document.createElement("div");
-  k.className = "heart kangaroo";
-  k.innerHTML = "🦘";
-  k.style.left = Math.random() * 100 + "vw";
-  k.style.fontSize = 14 + Math.random() * 10 + "px";
-  k.style.animationDuration = 26 + Math.random() * 12 + "s";
-  k.style.animationDelay = 20 + Math.random() * 30 + "s";
-  document.body.appendChild(k);
+document.querySelector(".close-letter").onclick = () =>
+  document.getElementById("letterPage").style.display = "none";
+
+/* EMOJIS */
+for (let i=0;i<22;i++){
+  const e=document.createElement("div");
+  e.className="heart";
+  e.innerHTML=Math.random()<0.08?"🦘":"❤️";
+  e.style.left=Math.random()*100+"vw";
+  e.style.fontSize=12+Math.random()*18+"px";
+  e.style.animationDuration=14+Math.random()*10+"s";
+  document.body.appendChild(e);
 }
 </script>
 
