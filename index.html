@@ -26,7 +26,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 20;
   transition: opacity 1.2s ease, visibility 1.2s ease;
 }
 #intro.hidden { opacity: 0; visibility: hidden; }
@@ -59,6 +59,8 @@ html, body {
   align-items: center;
   text-align: center;
   padding: 40px 16px;
+  position: relative;
+  z-index: 5;
 }
 
 h1 {
@@ -75,6 +77,7 @@ h1 {
   animation-delay: 1.4s;
 }
 
+/* ================= IMAGE ================= */
 .photo {
   width: 100%;
   max-width: 1100px;
@@ -82,9 +85,36 @@ h1 {
   object-fit: contain;
   border-radius: 22px;
   box-shadow: 0 40px 90px rgba(0,0,0,0.8);
+  cursor: zoom-in;
+  z-index: 6;
+  transition: transform 0.4s ease;
+}
+
+/* ================= ZOOM ================= */
+#zoomOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   opacity: 0;
-  animation: fadeIn 2s forwards;
-  animation-delay: 0.8s;
+  visibility: hidden;
+  z-index: 30;
+  transition: opacity 0.4s ease;
+}
+
+#zoomOverlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+#zoomOverlay img {
+  max-width: 92vw;
+  max-height: 92vh;
+  border-radius: 18px;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.9);
+  cursor: zoom-out;
 }
 
 /* ================= TIMER ================= */
@@ -97,6 +127,7 @@ h1 {
   opacity: 0.7;
   text-align: center;
   pointer-events: none;
+  z-index: 8;
 }
 
 /* ================= SIGNATURE ================= */
@@ -108,17 +139,18 @@ h1 {
   font-size: 0.7rem;
   opacity: 0.45;
   font-style: italic;
-  white-space: nowrap; /* 👈 UNE SEULE LIGNE */
+  white-space: nowrap;
   pointer-events: none;
+  z-index: 8;
 }
 
-/* ================= COEURS ================= */
+/* ================= EMOJIS ================= */
 .heart {
   position: fixed;
   bottom: -10vh;
   animation: floatUp linear infinite;
   pointer-events: none;
-  z-index: 1;
+  z-index: 1; /* 👈 TOUJOURS DERRIÈRE */
 }
 
 .heart.love {
@@ -135,6 +167,7 @@ h1 {
   to { transform: translateY(-120vh); opacity: 0; }
 }
 
+/* ================= ANIMS ================= */
 @keyframes fadeIn { to { opacity: 1; } }
 </style>
 </head>
@@ -149,13 +182,18 @@ h1 {
 <!-- PAGE 1 -->
 <section class="section">
   <h1>Je t’aime ❤️</h1>
-  <div class="subtitle">profite bien de tes petits bons ❤️</div>
+  <div class="subtitle">profite bien de tes petits bons ^^ </div>
 </section>
 
 <!-- PAGE 2 -->
 <section class="section">
-  <img src="loulou%20cadre.png" class="photo" alt="Nous deux">
+  <img src="loulou%20cadre.png" class="photo" id="mainPhoto" alt="Nous deux">
 </section>
+
+<!-- ZOOM IMAGE -->
+<div id="zoomOverlay">
+  <img src="loulou%20cadre.png" alt="Zoom">
+</div>
 
 <!-- TIMER -->
 <div class="love-timer">
@@ -175,6 +213,13 @@ document.querySelector(".intro-btn").onclick = () => {
   document.getElementById("intro").classList.add("hidden");
 };
 
+/* ZOOM IMAGE */
+const photo = document.getElementById("mainPhoto");
+const overlay = document.getElementById("zoomOverlay");
+
+photo.onclick = () => overlay.classList.add("active");
+overlay.onclick = () => overlay.classList.remove("active");
+
 /* TIMER */
 const startDate = new Date(2025, 3, 21, 0, 0, 1);
 
@@ -191,11 +236,10 @@ function updateTimer() {
 setInterval(updateTimer, 1000);
 updateTimer();
 
-/* ❤️ + 🦘 FLOTTANTS */
+/* ❤️ + 🦘 EMOJIS (DERRIÈRE TOUT) */
 const HEART_COUNT = 22;
 const KANGAROO_COUNT = 2;
 
-/* Coeurs */
 for (let i = 0; i < HEART_COUNT; i++) {
   const h = document.createElement("div");
   h.className = "heart love";
@@ -207,7 +251,6 @@ for (let i = 0; i < HEART_COUNT; i++) {
   document.body.appendChild(h);
 }
 
-/* Kangourous (rares & discrets) */
 for (let i = 0; i < KANGAROO_COUNT; i++) {
   const k = document.createElement("div");
   k.className = "heart kangaroo";
@@ -215,7 +258,7 @@ for (let i = 0; i < KANGAROO_COUNT; i++) {
   k.style.left = Math.random() * 100 + "vw";
   k.style.fontSize = 14 + Math.random() * 10 + "px";
   k.style.animationDuration = 26 + Math.random() * 12 + "s";
-  k.style.animationDelay = 20 + Math.random() * 30 + "s"; // 👈 très rare
+  k.style.animationDelay = 20 + Math.random() * 30 + "s";
   document.body.appendChild(k);
 }
 </script>
