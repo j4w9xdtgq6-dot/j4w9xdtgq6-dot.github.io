@@ -18,7 +18,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ================= ÉCRAN D'ENTRÉE ================= */
+/* ================= INTRO ================= */
 #intro {
   position: fixed;
   inset: 0;
@@ -29,13 +29,8 @@ html, body {
   z-index: 10;
   transition: opacity 1.2s ease, visibility 1.2s ease;
 }
+#intro.hidden { opacity: 0; visibility: hidden; }
 
-#intro.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* BOUTON */
 .intro-btn {
   background: linear-gradient(135deg, #ff2d55, #c70039);
   color: #fff;
@@ -45,8 +40,7 @@ html, body {
   border: none;
   cursor: pointer;
   font-family: 'Playfair Display', serif;
-  letter-spacing: 1px;
-  box-shadow: 0 20px 60px rgba(255, 45, 85, 0.5);
+  box-shadow: 0 20px 60px rgba(255,45,85,0.5);
   animation: pulse 2s infinite;
 }
 
@@ -56,8 +50,7 @@ html, body {
   100% { box-shadow: 0 0 0 0 rgba(255,45,85,0); }
 }
 
-/* ================= SITE ================= */
-
+/* ================= SECTIONS ================= */
 .section {
   min-height: 100vh;
   display: flex;
@@ -69,31 +62,20 @@ html, body {
   position: relative;
 }
 
-.section::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 120px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0), #000);
-}
-
-/* PAGE 1 */
 h1 {
   font-size: 4rem;
   margin-bottom: 12px;
-  animation: fadeIn 2s ease forwards;
+  animation: fadeIn 2s forwards;
 }
 
 .subtitle {
   font-size: 1rem;
   font-style: italic;
   opacity: 0;
-  animation: fadeIn 2s ease forwards;
-  animation-delay: 1.5s;
+  animation: fadeIn 2s forwards;
+  animation-delay: 1.4s;
 }
 
-/* PAGE 2 */
 .photo {
   width: 100%;
   max-width: 1100px;
@@ -102,208 +84,143 @@ h1 {
   border-radius: 22px;
   box-shadow: 0 40px 90px rgba(0,0,0,0.8);
   opacity: 0;
-  animation: fadeIn 2s ease forwards;
+  animation: fadeIn 2s forwards;
   animation-delay: 0.8s;
 }
 
-/* TIMER */
+/* ================= TIMER ================= */
 .love-timer {
   position: fixed;
-  bottom: 32px;
+  bottom: 54px; /* remonté */
   left: 50%;
   transform: translateX(-50%);
   font-size: 0.75rem;
-  opacity: 0.65;
+  opacity: 0.7;
   text-align: center;
   z-index: 2;
   pointer-events: none;
 }
 
-.love-timer span {
-  font-variant-numeric: tabular-nums;
-}
-
-/* SIGNATURE */
 .footer-signature {
   position: fixed;
-  bottom: 12px;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 0.7rem;
   opacity: 0.45;
   font-style: italic;
-  z-index: 2;
   pointer-events: none;
 }
 
-/* COEURS */
+/* ================= COEURS ================= */
 .heart {
   position: fixed;
   bottom: -10vh;
-  font-size: 16px;
-  color: rgba(255, 90, 130, 0.2);
+  color: rgba(255,90,130,0.25);
   animation: floatUp linear infinite;
   pointer-events: none;
   z-index: 1;
 }
 
-.click-heart {
-  position: fixed;
-  font-size: 20px;
-  color: rgba(255, 90, 130, 0.9);
-  pointer-events: none;
-  animation: popHeart 1.4s ease forwards;
-  z-index: 3;
-}
-
-.trail {
-  position: fixed;
-  width: 6px;
-  height: 6px;
-  background: rgba(255, 90, 130, 0.6);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 4;
-}
-
-/* ANIMS */
 @keyframes floatUp {
   from { transform: translateY(0); opacity: 0; }
-  15% { opacity: 1; }
+  20% { opacity: 1; }
   to { transform: translateY(-120vh); opacity: 0; }
 }
 
-@keyframes popHeart {
-  0% { transform: scale(0.4); opacity: 0; }
-  20% { opacity: 1; }
-  100% { transform: translateY(-80px) scale(1.4); opacity: 0; }
+/* ================= CURSEUR ================= */
+.heart-slider {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  z-index: 5;
 }
 
-@keyframes fadeIn {
-  to { opacity: 1; }
+.heart-slider input {
+  width: 120px;
 }
+
+/* ================= ANIMS ================= */
+@keyframes fadeIn { to { opacity: 1; } }
 </style>
 </head>
 
 <body>
 
-<!-- ÉCRAN D'ENTRÉE -->
 <div id="intro">
   <button class="intro-btn">Lou, appuie ❤️</button>
 </div>
 
-<!-- PAGE 1 -->
 <section class="section">
   <h1>Je t’aime ❤️</h1>
   <div class="subtitle">profite bien de tes petits bons ^^ </div>
 </section>
 
-<!-- PAGE 2 -->
 <section class="section">
   <img src="loulou%20cadre.png" class="photo" alt="Nous deux">
 </section>
 
-<!-- TIMER -->
-<div class="love-timer">
-  <div> Nous depuis : </div>
-  <span id="timer"></span>
+<!-- CURSEUR COEURS -->
+<div class="heart-slider">
+  <input type="range" min="0" max="30" value="14" id="heartRange">
 </div>
 
-<!-- SIGNATURE -->
+<div class="love-timer">
+  <div>Nous depuis :</div>
+  <div id="timer"></div>
+</div>
+
 <div class="footer-signature">
   site créé par Valentin pour Lou, par amour ❤️
 </div>
 
-<!-- COEURS FLOTTANTS -->
 <script>
-for (let i = 0; i < 14; i++) {
-  const h = document.createElement("div");
-  h.className = "heart";
-  h.innerHTML = "❤";
-  h.style.left = Math.random() * 100 + "vw";
-  h.style.animationDuration = 18 + Math.random() * 12 + "s";
-  h.style.fontSize = 12 + Math.random() * 16 + "px";
-  document.body.appendChild(h);
-}
-</script>
+/* INTRO */
+document.querySelector(".intro-btn").onclick = () => {
+  if (navigator.vibrate) navigator.vibrate(30);
+  document.getElementById("intro").classList.add("hidden");
+};
 
-<!-- INTERACTIONS + INTRO + TIMER -->
-<script>
-/* DATE DE DÉBUT DU COUPLE ❤️ */
-const startDate = new Date(2025, 3, 21, 0, 0, 1); // 21/04/2025 à 00:00:01
+/* TIMER */
+const startDate = new Date(2025, 3, 21, 0, 0, 1);
 
 function updateTimer() {
-  const now = new Date();
-  let diff = now - startDate;
-
-  const seconds = Math.floor(diff / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-
-  const years = Math.floor(days / 365);
-  const months = Math.floor((days % 365) / 30);
-  const remainingDays = days % 30;
-
-  const h = hours % 24;
-  const m = minutes % 60;
-  const s = seconds % 60;
+  const diff = new Date() - startDate;
+  const s = Math.floor(diff / 1000);
+  const m = Math.floor(s / 60);
+  const h = Math.floor(m / 60);
+  const d = Math.floor(h / 24);
 
   document.getElementById("timer").textContent =
-    `${years}a ${months}m ${remainingDays}j ${h}h ${m}min ${s}s`;
+    `${Math.floor(d/365)}a ${Math.floor(d%365/30)}m ${d%30}j ${h%24}h ${m%60}min ${s%60}s`;
 }
-
-updateTimer();
 setInterval(updateTimer, 1000);
+updateTimer();
 
-/* INTRO */
-document.querySelector(".intro-btn").addEventListener("click", () => {
-  if (navigator.vibrate) navigator.vibrate(25);
-  document.getElementById("intro").classList.add("hidden");
-});
+/* COEURS DYNAMIQUES */
+let hearts = [];
 
-/* INTERACTIONS */
-let drawing = false;
-
-function createHeart(x, y) {
-  const h = document.createElement("div");
-  h.className = "click-heart";
-  h.innerHTML = "❤";
-  h.style.left = x - 10 + "px";
-  h.style.top = y - 10 + "px";
-  document.body.appendChild(h);
-  setTimeout(() => h.remove(), 1400);
+function generateHearts(n) {
+  hearts.forEach(h => h.remove());
+  hearts = [];
+  for (let i = 0; i < n; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = 12 + Math.random() * 18 + "px";
+    h.style.animationDuration = 16 + Math.random() * 12 + "s";
+    document.body.appendChild(h);
+    hearts.push(h);
+  }
 }
 
-function createTrail(x, y) {
-  const t = document.createElement("div");
-  t.className = "trail";
-  t.style.left = x + "px";
-  t.style.top = y + "px";
-  document.body.appendChild(t);
-  setTimeout(() => t.remove(), 600);
-}
+generateHearts(14);
 
-document.addEventListener("mousedown", e => {
-  drawing = true;
-  createHeart(e.clientX, e.clientY);
-});
-document.addEventListener("mousemove", e => {
-  if (drawing) createTrail(e.clientX, e.clientY);
-});
-document.addEventListener("mouseup", () => drawing = false);
-
-document.addEventListener("touchstart", e => {
-  drawing = true;
-  const t = e.touches[0];
-  createHeart(t.clientX, t.clientY);
-});
-document.addEventListener("touchmove", e => {
-  if (!drawing) return;
-  const t = e.touches[0];
-  createTrail(t.clientX, t.clientY);
-});
-document.addEventListener("touchend", () => drawing = false);
+document.getElementById("heartRange").oninput = e => {
+  generateHearts(e.target.value);
+};
 </script>
 
 </body>
