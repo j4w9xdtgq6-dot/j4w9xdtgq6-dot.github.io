@@ -11,10 +11,9 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  background: #000;
-  font-family: Georgia, serif;
+  background: radial-gradient(circle at top, #1b1b2f, #000);
   color: #fff;
+  font-family: Georgia, serif;
   overflow-x: hidden;
 }
 
@@ -22,32 +21,29 @@ html, body {
 #intro {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, #1b1b2f, #000);
+  background: radial-gradient(circle, #2a2a4a, #000);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 20;
-  transition: opacity 1.2s ease, visibility 1.2s ease;
+  z-index: 50;
+  transition: opacity 1s ease, visibility 1s ease;
 }
 #intro.hidden { opacity: 0; visibility: hidden; }
 
 .intro-btn {
-  background: linear-gradient(135deg, #ff2d55, #c70039);
-  color: #fff;
+  font-family: 'Playfair Display', serif;
   font-size: 2.3rem;
-  padding: 22px 48px;
+  padding: 24px 52px;
   border-radius: 60px;
   border: none;
   cursor: pointer;
-  font-family: 'Playfair Display', serif;
-  box-shadow: 0 20px 60px rgba(255,45,85,0.5);
+  background: linear-gradient(135deg, #ff2d55, #c70039);
+  color: white;
+  box-shadow: 0 20px 60px rgba(255,45,85,.6);
   animation: pulse 2s infinite;
 }
-
 @keyframes pulse {
-  0% { transform: scale(1); }
   50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
 }
 
 /* SECTIONS */
@@ -65,14 +61,14 @@ html, body {
 
 h1 {
   font-size: 4rem;
-  margin-bottom: 12px;
   cursor: pointer;
+  user-select: none;
 }
 
 .subtitle {
-  font-size: 1rem;
+  font-size: .95rem;
+  opacity: .8;
   font-style: italic;
-  opacity: 0.8;
 }
 
 /* IMAGE */
@@ -82,7 +78,7 @@ h1 {
   max-height: 75vh;
   object-fit: contain;
   border-radius: 22px;
-  box-shadow: 0 40px 90px rgba(0,0,0,0.8);
+  box-shadow: 0 40px 90px rgba(0,0,0,.9);
   cursor: zoom-in;
   z-index: 6;
 }
@@ -91,57 +87,20 @@ h1 {
 #zoomOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.92);
+  background: rgba(0,0,0,.95);
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  z-index: 30;
-  transition: opacity 0.4s ease;
+  z-index: 60;
 }
-#zoomOverlay.active {
-  opacity: 1;
-  visibility: visible;
-}
+#zoomOverlay.active { opacity: 1; visibility: visible; }
 #zoomOverlay img {
-  max-width: 92vw;
-  max-height: 92vh;
+  max-width: 95vw;
+  max-height: 95vh;
   border-radius: 18px;
   cursor: zoom-out;
-}
-
-/* LETTRE */
-#letterPage {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  padding: 60px 24px;
-  overflow-y: auto;
-  z-index: 40;
-  display: none;
-}
-
-#letterPage h2 {
-  font-family: 'Playfair Display', serif;
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.letter {
-  max-width: 720px;
-  margin: auto;
-  line-height: 1.7;
-  white-space: pre-line;
-}
-
-.close-letter {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  font-size: 1.4rem;
-  cursor: pointer;
-  opacity: 0.6;
 }
 
 /* TIMER & SIGNATURE */
@@ -150,21 +109,50 @@ h1 {
   bottom: 56px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.75rem;
-  opacity: 0.7;
   text-align: center;
-  z-index: 8;
+  font-size: .75rem;
+  opacity: .75;
+  z-index: 10;
 }
 
-.footer-signature {
+.footer {
   position: fixed;
   bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.7rem;
-  opacity: 0.45;
+  font-size: .7rem;
+  opacity: .45;
   white-space: nowrap;
-  z-index: 8;
+  z-index: 10;
+}
+
+/* LETTRE */
+#letterPage {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 70;
+  display: none;
+  padding: 60px 24px;
+  overflow-y: auto;
+}
+#letterPage h2 {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 40px;
+}
+.letter {
+  max-width: 720px;
+  margin: auto;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+.close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  opacity: .6;
 }
 
 /* COEURS */
@@ -176,7 +164,7 @@ h1 {
 }
 @keyframes floatUp {
   from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-120px); opacity: 0; }
+  to { transform: translateY(-140px); opacity: 0; }
 }
 </style>
 </head>
@@ -193,7 +181,7 @@ h1 {
 </section>
 
 <section class="section">
-  <img src="loulou%20cadre.png" class="photo" id="mainPhoto">
+  <img src="loulou%20cadre.png" class="photo" id="photo">
 </section>
 
 <div id="zoomOverlay">
@@ -201,7 +189,7 @@ h1 {
 </div>
 
 <div id="letterPage">
-  <div class="close-letter">✕</div>
+  <div class="close">✕</div>
   <h2>Lettre qui t’est destinée</h2>
   <div class="letter">
 Mon amour,
@@ -246,51 +234,6 @@ parce que tu étais toi, simplement toi.
 
 Et ça m’a suffi.
 Ça a tout changé.
-Ça a renversé mes certitudes.
-
-J’ai compris sans réfléchir,
-sans hésiter,
-que c’était toi que mon cœur reconnaissait,
-toi que mes mains cherchaient,
-toi que mon âme choisissait.
-
-Toi, encore toi,
-toujours toi,
-juste toi.
-
-Tu sais, ce qui me touche le plus,
-c’est que même quand la distance s’étire entre nous,
-tu restes mon endroit préféré.
-
-Il me suffit de fermer les yeux pour te rejoindre :
-ta voix qui m’adoucit,
-ta chaleur qui me rassure,
-ta façon de me regarder comme si j’étais exactement là où je devais être.
-
-Tu es cette douceur qui apaise tout en moi,
-celle qui calme mes doutes sans même parler.
-Avec toi, je me sens léger, vrai, vivant.
-Et même quand tu n’es pas là, il reste quelque chose de toi,
-comme une chaleur discrète qui continue de m’accompagner.
-
-J’aime même m’ennuyer avec toi.
-J’en rêvais sans vraiment savoir où trouver ce genre de relation, ni comment y parvenir.
-Et malgré les hauts et les bas, j’ai l’impression qu’on touche du doigt tout ce que j’ai toujours espéré.
-Avec toi, je me sens vraiment au bon endroit.
-
-Je crois que tu ne réalises pas toujours le bien que tu as fait autour de toi, et en moi.
-Juste en étant là, tu as changé beaucoup de choses.
-
-Je sais que tu as souffert, que tu souffres encore parfois, et que tout ça demande du temps et des efforts.
-Je sais aussi que tu es une personne forte, même quand certaines fragilités restent silencieuses.
-
-Mais il y a une chose que je veux que tu n’oublies jamais :
-tu n’es jamais un poids pour moi.
-Et si un jour tu as envie de parler, je serai là, sans pression, sans attente, simplement là.
-
-Je veux simplement que tu saches que depuis le début, je suis profondément heureux qu’on se soit engagés tous les deux.
-Je n’ai jamais regretté, pas une seule fois.
-Et quoi qu’il arrive, peu importe le moment ou la situation, je serai toujours là pour toi.
 
 Je t’aime.
 
@@ -303,7 +246,7 @@ Ton Valentin
   <div id="timer"></div>
 </div>
 
-<div class="footer-signature">
+<div class="footer">
   site créé par Valentin pour Lou, par amour ❤️
 </div>
 
@@ -311,41 +254,58 @@ Ton Valentin
 document.querySelector(".intro-btn").onclick = () =>
   document.getElementById("intro").classList.add("hidden");
 
-const startDate = new Date(2025, 3, 21, 0, 0, 1);
-setInterval(() => {
-  const d = Math.floor((Date.now() - startDate) / 1000);
+const start = new Date(2025,3,21,0,0,1);
+setInterval(()=>{
+  const s = Math.floor((Date.now()-start)/1000);
   timer.textContent =
-    `${Math.floor(d/31536000)}a ${Math.floor(d%31536000/2592000)}m ${Math.floor(d%2592000/86400)}j ${Math.floor(d%86400/3600)}h ${Math.floor(d%3600/60)}min ${d%60}s`;
-}, 1000);
+    `${Math.floor(s/31536000)}a `+
+    `${Math.floor(s%31536000/2592000)}m `+
+    `${Math.floor(s%2592000/86400)}j `+
+    `${Math.floor(s%86400/3600)}h `+
+    `${Math.floor(s%3600/60)}min `+
+    `${s%60}s`;
+},1000);
 
-mainPhoto.onclick = () => zoomOverlay.classList.add("active");
-zoomOverlay.onclick = () => zoomOverlay.classList.remove("active");
+photo.onclick = ()=>zoomOverlay.classList.add("active");
+zoomOverlay.onclick = ()=>zoomOverlay.classList.remove("active");
 
-let lastTap = 0;
-secretHeart.onclick = () => {
-  const now = Date.now();
-  if (now - lastTap < 400) letterPage.style.display = "block";
-  lastTap = now;
+let last=0;
+secretHeart.onclick=()=>{
+  const n=Date.now();
+  if(n-last<400) letterPage.style.display="block";
+  last=n;
 };
-document.querySelector(".close-letter").onclick = () =>
-  letterPage.style.display = "none";
+document.querySelector(".close").onclick=()=>letterPage.style.display="none";
 
-function spawnClickHeart(x, y) {
-  const h = document.createElement("div");
-  h.className = "heart";
-  h.innerHTML = Math.random() < 0.05 ? "🦘" : "❤️";
-  h.style.left = x + "px";
-  h.style.top = y + "px";
-  h.style.fontSize = (14 + Math.random() * 16) + "px";
-  h.style.animationDuration = (1.8 + Math.random()) + "s";
+/* COEURS FOND */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML=Math.random()<0.03?"🦘":"❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.bottom="-30px";
+  h.style.fontSize=(12+Math.random()*20)+"px";
+  h.style.animationDuration=(10+Math.random()*10)+"s";
   document.body.appendChild(h);
-  setTimeout(() => h.remove(), 2000);
-}
+  setTimeout(()=>h.remove(),20000);
+},900);
 
-document.addEventListener("click", e => spawnClickHeart(e.clientX, e.clientY));
-document.addEventListener("touchstart", e => {
-  const t = e.touches[0];
-  spawnClickHeart(t.clientX, t.clientY);
+/* COEURS AU CLIC */
+function clickHeart(x,y){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML=Math.random()<0.05?"🦘":"❤️";
+  h.style.left=x+"px";
+  h.style.top=y+"px";
+  h.style.fontSize=(14+Math.random()*16)+"px";
+  h.style.animationDuration="2s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),2000);
+}
+document.addEventListener("click",e=>clickHeart(e.clientX,e.clientY));
+document.addEventListener("touchstart",e=>{
+  const t=e.touches[0];
+  clickHeart(t.clientX,t.clientY);
 });
 </script>
 
