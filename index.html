@@ -11,7 +11,10 @@
 html, body {
   margin: 0;
   padding: 0;
+  min-height: 100%;
+  width: 100%;
   background: radial-gradient(circle at top, #1b1b2f, #000);
+  background-attachment: fixed;
   color: #fff;
   font-family: Georgia, serif;
   overflow-x: hidden;
@@ -25,7 +28,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 50;
+  z-index: 100;
   transition: opacity 1s ease, visibility 1s ease;
 }
 #intro.hidden { opacity: 0; visibility: hidden; }
@@ -38,13 +41,11 @@ html, body {
   border: none;
   cursor: pointer;
   background: linear-gradient(135deg, #ff2d55, #c70039);
-  color: white;
+  color: #fff;
   box-shadow: 0 20px 60px rgba(255,45,85,.6);
   animation: pulse 2s infinite;
 }
-@keyframes pulse {
-  50% { transform: scale(1.05); }
-}
+@keyframes pulse { 50% { transform: scale(1.05); } }
 
 /* SECTIONS */
 .section {
@@ -59,11 +60,8 @@ html, body {
   z-index: 5;
 }
 
-h1 {
-  font-size: 4rem;
-  cursor: pointer;
-  user-select: none;
-}
+h1 { font-size: 4rem; user-select: none; }
+#secretHeart { cursor: pointer; }
 
 .subtitle {
   font-size: .95rem;
@@ -93,17 +91,11 @@ h1 {
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  z-index: 60;
+  z-index: 200;
 }
 #zoomOverlay.active { opacity: 1; visibility: visible; }
-#zoomOverlay img {
-  max-width: 95vw;
-  max-height: 95vh;
-  border-radius: 18px;
-  cursor: zoom-out;
-}
 
-/* TIMER & SIGNATURE */
+/* TIMER & FOOTER */
 .love-timer {
   position: fixed;
   bottom: 56px;
@@ -112,9 +104,8 @@ h1 {
   text-align: center;
   font-size: .75rem;
   opacity: .75;
-  z-index: 10;
+  z-index: 20;
 }
-
 .footer {
   position: fixed;
   bottom: 14px;
@@ -123,7 +114,7 @@ h1 {
   font-size: .7rem;
   opacity: .45;
   white-space: nowrap;
-  z-index: 10;
+  z-index: 20;
 }
 
 /* LETTRE */
@@ -131,7 +122,7 @@ h1 {
   position: fixed;
   inset: 0;
   background: #000;
-  z-index: 70;
+  z-index: 300;
   display: none;
   padding: 60px 24px;
   overflow-y: auto;
@@ -176,7 +167,7 @@ h1 {
 </div>
 
 <section class="section">
-  <h1 id="secretHeart">Je t’aime ❤️</h1>
+  <h1>Je t’aime <span id="secretHeart">❤️</span></h1>
   <div class="subtitle">profite bien de tes petits bons ❤️</div>
 </section>
 
@@ -184,9 +175,7 @@ h1 {
   <img src="loulou%20cadre.png" class="photo" id="photo">
 </section>
 
-<div id="zoomOverlay">
-  <img src="loulou%20cadre.png">
-</div>
+<div id="zoomOverlay"><img src="loulou%20cadre.png"></div>
 
 <div id="letterPage">
   <div class="close">✕</div>
@@ -234,6 +223,51 @@ parce que tu étais toi, simplement toi.
 
 Et ça m’a suffi.
 Ça a tout changé.
+Ça a renversé mes certitudes.
+
+J’ai compris sans réfléchir,
+sans hésiter,
+que c’était toi que mon cœur reconnaissait,
+toi que mes mains cherchaient,
+toi que mon âme choisissait.
+
+Toi, encore toi,
+toujours toi,
+juste toi.
+
+Tu sais, ce qui me touche le plus,
+c’est que même quand la distance s’étire entre nous,
+tu restes mon endroit préféré.
+
+Il me suffit de fermer les yeux pour te rejoindre :
+ta voix qui m’adoucit,
+ta chaleur qui me rassure,
+ta façon de me regarder comme si j’étais exactement là où je devais être.
+
+Tu es cette douceur qui apaise tout en moi,
+celle qui calme mes doutes sans même parler.
+Avec toi, je me sens léger, vrai, vivant.
+Et même quand tu n’es pas là, il reste quelque chose de toi,
+comme une chaleur discrète qui continue de m’accompagner.
+
+J’aime même m’ennuyer avec toi.
+J’en rêvais sans vraiment savoir où trouver ce genre de relation, ni comment y parvenir.
+Et malgré les hauts et les bas, j’ai l’impression qu’on touche du doigt tout ce que j’ai toujours espéré.
+Avec toi, je me sens vraiment au bon endroit.
+
+Je crois que tu ne réalises pas toujours le bien que tu as fait autour de toi, et en moi.
+Juste en étant là, tu as changé beaucoup de choses.
+
+Je sais que tu as souffert, que tu souffres encore parfois, et que tout ça demande du temps et des efforts.
+Je sais aussi que tu es une personne forte, même quand certaines fragilités restent silencieuses.
+
+Mais il y a une chose que je veux que tu n’oublies jamais :
+tu n’es jamais un poids pour moi.
+Et si un jour tu as envie de parler, je serai là, sans pression, sans attente, simplement là.
+
+Je veux simplement que tu saches que depuis le début, je suis profondément heureux qu’on se soit engagés tous les deux.
+Je n’ai jamais regretté, pas une seule fois.
+Et quoi qu’il arrive, peu importe le moment ou la situation, je serai toujours là pour toi.
 
 Je t’aime.
 
@@ -246,18 +280,15 @@ Ton Valentin
   <div id="timer"></div>
 </div>
 
-<div class="footer">
-  site créé par Valentin pour Lou, par amour ❤️
-</div>
+<div class="footer">site créé par Valentin pour Lou, par amour ❤️</div>
 
 <script>
-document.querySelector(".intro-btn").onclick = () =>
-  document.getElementById("intro").classList.add("hidden");
+document.querySelector(".intro-btn").onclick=()=>intro.classList.add("hidden");
 
-const start = new Date(2025,3,21,0,0,1);
+const start=new Date(2025,3,21,0,0,1);
 setInterval(()=>{
-  const s = Math.floor((Date.now()-start)/1000);
-  timer.textContent =
+  const s=Math.floor((Date.now()-start)/1000);
+  timer.textContent=
     `${Math.floor(s/31536000)}a `+
     `${Math.floor(s%31536000/2592000)}m `+
     `${Math.floor(s%2592000/86400)}j `+
@@ -266,8 +297,8 @@ setInterval(()=>{
     `${s%60}s`;
 },1000);
 
-photo.onclick = ()=>zoomOverlay.classList.add("active");
-zoomOverlay.onclick = ()=>zoomOverlay.classList.remove("active");
+photo.onclick=()=>zoomOverlay.classList.add("active");
+zoomOverlay.onclick=()=>zoomOverlay.classList.remove("active");
 
 let last=0;
 secretHeart.onclick=()=>{
@@ -277,7 +308,6 @@ secretHeart.onclick=()=>{
 };
 document.querySelector(".close").onclick=()=>letterPage.style.display="none";
 
-/* COEURS FOND */
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="heart";
@@ -290,22 +320,16 @@ setInterval(()=>{
   setTimeout(()=>h.remove(),20000);
 },900);
 
-/* COEURS AU CLIC */
-function clickHeart(x,y){
+document.addEventListener("click",e=>{
   const h=document.createElement("div");
   h.className="heart";
   h.innerHTML=Math.random()<0.05?"🦘":"❤️";
-  h.style.left=x+"px";
-  h.style.top=y+"px";
-  h.style.fontSize=(14+Math.random()*16)+"px";
+  h.style.left=e.clientX+"px";
+  h.style.top=e.clientY+"px";
+  h.style.fontSize="18px";
   h.style.animationDuration="2s";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),2000);
-}
-document.addEventListener("click",e=>clickHeart(e.clientX,e.clientY));
-document.addEventListener("touchstart",e=>{
-  const t=e.touches[0];
-  clickHeart(t.clientX,t.clientY);
 });
 </script>
 
