@@ -66,10 +66,6 @@ html, body {
 h1 {
   font-size: 4rem;
   margin-bottom: 12px;
-  user-select: none;
-}
-
-#secretHeart {
   cursor: pointer;
 }
 
@@ -91,7 +87,7 @@ h1 {
   z-index: 6;
 }
 
-/* ZOOM IMAGE */
+/* ZOOM */
 #zoomOverlay {
   position: fixed;
   inset: 0;
@@ -115,12 +111,11 @@ h1 {
   cursor: zoom-out;
 }
 
-/* LETTRE SECRÈTE */
+/* LETTRE */
 #letterPage {
   position: fixed;
   inset: 0;
   background: #000;
-  color: #f5f5f5;
   padding: 60px 24px;
   overflow-y: auto;
   z-index: 40;
@@ -137,7 +132,6 @@ h1 {
   max-width: 720px;
   margin: auto;
   line-height: 1.7;
-  font-size: 1rem;
   white-space: pre-line;
 }
 
@@ -150,7 +144,7 @@ h1 {
   opacity: 0.6;
 }
 
-/* TIMER + SIGNATURE */
+/* TIMER & SIGNATURE */
 .love-timer {
   position: fixed;
   bottom: 56px;
@@ -158,8 +152,8 @@ h1 {
   transform: translateX(-50%);
   font-size: 0.75rem;
   opacity: 0.7;
-  z-index: 8;
   text-align: center;
+  z-index: 8;
 }
 
 .footer-signature {
@@ -173,46 +167,39 @@ h1 {
   z-index: 8;
 }
 
-/* EMOJIS */
+/* COEURS */
 .heart {
   position: fixed;
-  bottom: -10vh;
-  animation: floatUp linear infinite;
   pointer-events: none;
   z-index: 1;
+  animation: floatUp linear forwards;
 }
 @keyframes floatUp {
-  from { transform: translateY(0); opacity: 0; }
-  15% { opacity: 1; }
-  to { transform: translateY(-120vh); opacity: 0; }
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-120px); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
 <div id="intro">
   <button class="intro-btn">Lou, appuie ❤️</button>
 </div>
 
-<!-- PAGE 1 -->
 <section class="section">
   <h1 id="secretHeart">Je t’aime ❤️</h1>
-  <div class="subtitle">profite bien de tes petits bons ^^ </div>
+  <div class="subtitle">profite bien de tes petits bons ❤️</div>
 </section>
 
-<!-- PAGE 2 -->
 <section class="section">
   <img src="loulou%20cadre.png" class="photo" id="mainPhoto">
 </section>
 
-<!-- ZOOM -->
 <div id="zoomOverlay">
   <img src="loulou%20cadre.png">
 </div>
 
-<!-- LETTRE SECRÈTE -->
 <div id="letterPage">
   <div class="close-letter">✕</div>
   <h2>Lettre qui t’est destinée</h2>
@@ -308,10 +295,9 @@ Et quoi qu’il arrive, peu importe le moment ou la situation, je serai toujours
 Je t’aime.
 
 Ton Valentin
-    </div>
+  </div>
 </div>
 
-<!-- TIMER -->
 <div class="love-timer">
   <div>Nous depuis :</div>
   <div id="timer"></div>
@@ -322,34 +308,28 @@ Ton Valentin
 </div>
 
 <script>
-/* INTRO */
 document.querySelector(".intro-btn").onclick = () =>
   document.getElementById("intro").classList.add("hidden");
 
-/* TIMER */
 const startDate = new Date(2025, 3, 21, 0, 0, 1);
 setInterval(() => {
-  const d = Math.floor((Date.now() - startDate)/1000);
-  document.getElementById("timer").textContent =
+  const d = Math.floor((Date.now() - startDate) / 1000);
+  timer.textContent =
     `${Math.floor(d/31536000)}a ${Math.floor(d%31536000/2592000)}m ${Math.floor(d%2592000/86400)}j ${Math.floor(d%86400/3600)}h ${Math.floor(d%3600/60)}min ${d%60}s`;
 }, 1000);
 
-/* ZOOM */
 mainPhoto.onclick = () => zoomOverlay.classList.add("active");
 zoomOverlay.onclick = () => zoomOverlay.classList.remove("active");
 
-/* EASTER EGG DOUBLE TAP */
 let lastTap = 0;
 secretHeart.onclick = () => {
   const now = Date.now();
-  if (now - lastTap < 400)
-    letterPage.style.display = "block";
+  if (now - lastTap < 400) letterPage.style.display = "block";
   lastTap = now;
 };
 document.querySelector(".close-letter").onclick = () =>
   letterPage.style.display = "none";
 
-/* COEURS AU CLIC / TOUCH */
 function spawnClickHeart(x, y) {
   const h = document.createElement("div");
   h.className = "heart";
@@ -362,9 +342,7 @@ function spawnClickHeart(x, y) {
   setTimeout(() => h.remove(), 2000);
 }
 
-document.addEventListener("click", e => {
-  spawnClickHeart(e.clientX, e.clientY);
-});
+document.addEventListener("click", e => spawnClickHeart(e.clientX, e.clientY));
 document.addEventListener("touchstart", e => {
   const t = e.touches[0];
   spawnClickHeart(t.clientX, t.clientY);
