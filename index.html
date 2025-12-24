@@ -8,13 +8,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
 <style>
+
+/* === FOND DEFINITIF ANTI BLANC SAFARI === */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, #1b1b2f, #000);
+  z-index: -9999;
+}
+
+/* RESET */
 html, body {
   margin: 0;
   padding: 0;
   min-height: 100%;
   width: 100%;
-  background: radial-gradient(circle at top, #1b1b2f, #000);
-  background-attachment: fixed;
+  background: transparent;
   color: #fff;
   font-family: Georgia, serif;
   overflow-x: hidden;
@@ -31,7 +41,10 @@ html, body {
   z-index: 100;
   transition: opacity 1s ease, visibility 1s ease;
 }
-#intro.hidden { opacity: 0; visibility: hidden; }
+#intro.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
 
 .intro-btn {
   font-family: 'Playfair Display', serif;
@@ -45,7 +58,9 @@ html, body {
   box-shadow: 0 20px 60px rgba(255,45,85,.6);
   animation: pulse 2s infinite;
 }
-@keyframes pulse { 50% { transform: scale(1.05); } }
+@keyframes pulse {
+  50% { transform: scale(1.05); }
+}
 
 /* SECTIONS */
 .section {
@@ -60,8 +75,14 @@ html, body {
   z-index: 5;
 }
 
-h1 { font-size: 4rem; user-select: none; }
-#secretHeart { cursor: pointer; }
+h1 {
+  font-size: 4rem;
+  user-select: none;
+}
+
+#secretHeart {
+  cursor: pointer;
+}
 
 .subtitle {
   font-size: .95rem;
@@ -81,7 +102,7 @@ h1 { font-size: 4rem; user-select: none; }
   z-index: 6;
 }
 
-/* ZOOM */
+/* ZOOM IMAGE (PROPRE) */
 #zoomOverlay {
   position: fixed;
   inset: 0;
@@ -93,7 +114,17 @@ h1 { font-size: 4rem; user-select: none; }
   visibility: hidden;
   z-index: 200;
 }
-#zoomOverlay.active { opacity: 1; visibility: visible; }
+#zoomOverlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+#zoomOverlay img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 18px;
+  cursor: zoom-out;
+}
 
 /* TIMER & FOOTER */
 .love-timer {
@@ -106,6 +137,7 @@ h1 { font-size: 4rem; user-select: none; }
   opacity: .75;
   z-index: 20;
 }
+
 .footer {
   position: fixed;
   bottom: 14px;
@@ -157,26 +189,34 @@ h1 { font-size: 4rem; user-select: none; }
   from { transform: translateY(0); opacity: 1; }
   to { transform: translateY(-140px); opacity: 0; }
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- INTRO -->
 <div id="intro">
   <button class="intro-btn">Lou, appuie ❤️</button>
 </div>
 
+<!-- PAGE 1 -->
 <section class="section">
   <h1>Je t’aime <span id="secretHeart">❤️</span></h1>
-  <div class="subtitle">profite bien de tes petits bons ❤️</div>
+  <div class="subtitle">profite bien de tes petits bons ^^ </div>
 </section>
 
+<!-- PAGE 2 -->
 <section class="section">
   <img src="loulou%20cadre.png" class="photo" id="photo">
 </section>
 
-<div id="zoomOverlay"><img src="loulou%20cadre.png"></div>
+<!-- ZOOM -->
+<div id="zoomOverlay">
+  <img src="loulou%20cadre.png">
+</div>
 
+<!-- LETTRE SECRÈTE -->
 <div id="letterPage">
   <div class="close">✕</div>
   <h2>Lettre qui t’est destinée</h2>
@@ -275,62 +315,84 @@ Ton Valentin
   </div>
 </div>
 
+<!-- TIMER -->
 <div class="love-timer">
   <div>Nous depuis :</div>
   <div id="timer"></div>
 </div>
 
-<div class="footer">site créé par Valentin pour Lou, par amour ❤️</div>
+<!-- FOOTER -->
+<div class="footer">
+  site créé par Valentin pour Lou, par amour ❤️
+</div>
 
 <script>
-document.querySelector(".intro-btn").onclick=()=>intro.classList.add("hidden");
 
-const start=new Date(2025,3,21,0,0,1);
-setInterval(()=>{
-  const s=Math.floor((Date.now()-start)/1000);
-  timer.textContent=
-    `${Math.floor(s/31536000)}a `+
-    `${Math.floor(s%31536000/2592000)}m `+
-    `${Math.floor(s%2592000/86400)}j `+
-    `${Math.floor(s%86400/3600)}h `+
-    `${Math.floor(s%3600/60)}min `+
+/* INTRO */
+document.querySelector(".intro-btn").onclick = () =>
+  document.getElementById("intro").classList.add("hidden");
+
+/* TIMER */
+const start = new Date(2025, 3, 21, 0, 0, 1);
+setInterval(() => {
+  const s = Math.floor((Date.now() - start) / 1000);
+  timer.textContent =
+    `${Math.floor(s/31536000)}a ` +
+    `${Math.floor(s%31536000/2592000)}m ` +
+    `${Math.floor(s%2592000/86400)}j ` +
+    `${Math.floor(s%86400/3600)}h ` +
+    `${Math.floor(s%3600/60)}min ` +
     `${s%60}s`;
-},1000);
+}, 1000);
 
-photo.onclick=()=>zoomOverlay.classList.add("active");
-zoomOverlay.onclick=()=>zoomOverlay.classList.remove("active");
+/* ZOOM IMAGE */
+photo.onclick = () => zoomOverlay.classList.add("active");
+zoomOverlay.onclick = () => zoomOverlay.classList.remove("active");
 
-let last=0;
-secretHeart.onclick=()=>{
-  const n=Date.now();
-  if(n-last<400) letterPage.style.display="block";
-  last=n;
-};
-document.querySelector(".close").onclick=()=>letterPage.style.display="none";
-
-setInterval(()=>{
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML=Math.random()<0.03?"🦘":"❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.bottom="-30px";
-  h.style.fontSize=(12+Math.random()*20)+"px";
-  h.style.animationDuration=(10+Math.random()*10)+"s";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),20000);
-},900);
-
-document.addEventListener("click",e=>{
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML=Math.random()<0.05?"🦘":"❤️";
-  h.style.left=e.clientX+"px";
-  h.style.top=e.clientY+"px";
-  h.style.fontSize="18px";
-  h.style.animationDuration="2s";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),2000);
+/* EASTER EGG UNIQUEMENT SUR LE ❤️ */
+let lastTap = 0;
+const heart = document.getElementById("secretHeart");
+heart.addEventListener("click", () => {
+  const now = Date.now();
+  if (now - lastTap < 400) {
+    letterPage.style.display = "block";
+  }
+  lastTap = now;
 });
+document.querySelector(".close").onclick = () =>
+  letterPage.style.display = "none";
+
+/* COEURS EN FOND */
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = Math.random() < 0.03 ? "🦘" : "❤️";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.bottom = "-30px";
+  h.style.fontSize = (12 + Math.random() * 20) + "px";
+  h.style.animationDuration = (10 + Math.random() * 10) + "s";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 20000);
+}, 900);
+
+/* COEURS AU CLIC / TOUCH */
+function clickHeart(x, y) {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = Math.random() < 0.05 ? "🦘" : "❤️";
+  h.style.left = x + "px";
+  h.style.top = y + "px";
+  h.style.fontSize = (14 + Math.random() * 16) + "px";
+  h.style.animationDuration = "2s";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 2000);
+}
+document.addEventListener("click", e => clickHeart(e.clientX, e.clientY));
+document.addEventListener("touchstart", e => {
+  const t = e.touches[0];
+  clickHeart(t.clientX, t.clientY);
+});
+
 </script>
 
 </body>
