@@ -2,35 +2,31 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Je t’aime</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Je t’aime</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
 <style>
 
-/* === FOND DEFINITIF ANTI BLANC SAFARI === */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at top, #1b1b2f, #000);
-  z-index: -9999;
+/* ===== FOND NOIR DEFINITIF (SAFARI OK) ===== */
+html {
+  background: #000;
 }
 
-/* RESET */
-html, body {
+body {
   margin: 0;
   padding: 0;
-  min-height: 100%;
-  width: 100%;
-  background: transparent;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1b1b2f, #000);
   color: #fff;
   font-family: Georgia, serif;
   overflow-x: hidden;
 }
 
-/* INTRO */
+* { box-sizing: border-box; }
+
+/* ===== INTRO ===== */
 #intro {
   position: fixed;
   inset: 0;
@@ -38,18 +34,17 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 1000;
   transition: opacity 1s ease, visibility 1s ease;
 }
 #intro.hidden {
   opacity: 0;
   visibility: hidden;
 }
-
 .intro-btn {
   font-family: 'Playfair Display', serif;
   font-size: 2.3rem;
-  padding: 24px 52px;
+  padding: 24px 56px;
   border-radius: 60px;
   border: none;
   cursor: pointer;
@@ -58,11 +53,9 @@ html, body {
   box-shadow: 0 20px 60px rgba(255,45,85,.6);
   animation: pulse 2s infinite;
 }
-@keyframes pulse {
-  50% { transform: scale(1.05); }
-}
+@keyframes pulse { 50% { transform: scale(1.05); } }
 
-/* SECTIONS */
+/* ===== SECTIONS ===== */
 .section {
   min-height: 100vh;
   display: flex;
@@ -75,22 +68,17 @@ html, body {
   z-index: 5;
 }
 
-h1 {
-  font-size: 4rem;
-  user-select: none;
-}
-
-#secretHeart {
-  cursor: pointer;
-}
+h1 { font-size: 4rem; margin: 0; }
+#secretHeart { cursor: pointer; }
 
 .subtitle {
+  margin-top: 10px;
   font-size: .95rem;
   opacity: .8;
   font-style: italic;
 }
 
-/* IMAGE */
+/* ===== IMAGE ===== */
 .photo {
   width: 100%;
   max-width: 1100px;
@@ -99,10 +87,10 @@ h1 {
   border-radius: 22px;
   box-shadow: 0 40px 90px rgba(0,0,0,.9);
   cursor: zoom-in;
-  z-index: 6;
+  z-index: 10;
 }
 
-/* ZOOM IMAGE (PROPRE) */
+/* ===== ZOOM IMAGE ===== */
 #zoomOverlay {
   position: fixed;
   inset: 0;
@@ -112,7 +100,7 @@ h1 {
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  z-index: 200;
+  z-index: 2000;
 }
 #zoomOverlay.active {
   opacity: 1;
@@ -126,7 +114,7 @@ h1 {
   cursor: zoom-out;
 }
 
-/* TIMER & FOOTER */
+/* ===== TIMER ===== */
 .love-timer {
   position: fixed;
   bottom: 56px;
@@ -138,6 +126,7 @@ h1 {
   z-index: 20;
 }
 
+/* ===== FOOTER ===== */
 .footer {
   position: fixed;
   bottom: 14px;
@@ -149,12 +138,12 @@ h1 {
   z-index: 20;
 }
 
-/* LETTRE */
+/* ===== LETTRE ===== */
 #letterPage {
   position: fixed;
   inset: 0;
   background: #000;
-  z-index: 300;
+  z-index: 3000;
   display: none;
   padding: 60px 24px;
   overflow-y: auto;
@@ -178,7 +167,7 @@ h1 {
   opacity: .6;
 }
 
-/* COEURS */
+/* ===== COEURS ===== */
 .heart {
   position: fixed;
   pointer-events: none;
@@ -203,7 +192,7 @@ h1 {
 <!-- PAGE 1 -->
 <section class="section">
   <h1>Je t’aime <span id="secretHeart">❤️</span></h1>
-  <div class="subtitle">profite bien de tes petits bons ^^ </div>
+  <div class="subtitle">profite bien de tes petits bons ❤️</div>
 </section>
 
 <!-- PAGE 2 -->
@@ -216,7 +205,7 @@ h1 {
   <img src="loulou%20cadre.png">
 </div>
 
-<!-- LETTRE SECRÈTE -->
+<!-- LETTRE -->
 <div id="letterPage">
   <div class="close">✕</div>
   <h2>Lettre qui t’est destinée</h2>
@@ -336,7 +325,7 @@ document.querySelector(".intro-btn").onclick = () =>
 const start = new Date(2025, 3, 21, 0, 0, 1);
 setInterval(() => {
   const s = Math.floor((Date.now() - start) / 1000);
-  timer.textContent =
+  document.getElementById("timer").textContent =
     `${Math.floor(s/31536000)}a ` +
     `${Math.floor(s%31536000/2592000)}m ` +
     `${Math.floor(s%2592000/86400)}j ` +
@@ -349,24 +338,21 @@ setInterval(() => {
 photo.onclick = () => zoomOverlay.classList.add("active");
 zoomOverlay.onclick = () => zoomOverlay.classList.remove("active");
 
-/* EASTER EGG UNIQUEMENT SUR LE ❤️ */
+/* EASTER EGG ❤️ SEULEMENT */
 let lastTap = 0;
-const heart = document.getElementById("secretHeart");
-heart.addEventListener("click", () => {
+secretHeart.onclick = () => {
   const now = Date.now();
-  if (now - lastTap < 400) {
-    letterPage.style.display = "block";
-  }
+  if (now - lastTap < 400) letterPage.style.display = "block";
   lastTap = now;
-});
+};
 document.querySelector(".close").onclick = () =>
   letterPage.style.display = "none";
 
-/* COEURS EN FOND */
+/* COEURS FOND */
 setInterval(() => {
   const h = document.createElement("div");
   h.className = "heart";
-  h.innerHTML = Math.random() < 0.03 ? "🦘" : "❤️";
+  h.innerHTML = Math.random() < 0.02 ? "🦘" : "❤️";
   h.style.left = Math.random() * 100 + "vw";
   h.style.bottom = "-30px";
   h.style.fontSize = (12 + Math.random() * 20) + "px";
@@ -375,22 +361,17 @@ setInterval(() => {
   setTimeout(() => h.remove(), 20000);
 }, 900);
 
-/* COEURS AU CLIC / TOUCH */
-function clickHeart(x, y) {
+/* COEURS AU CLIC */
+document.addEventListener("click", e => {
   const h = document.createElement("div");
   h.className = "heart";
   h.innerHTML = Math.random() < 0.05 ? "🦘" : "❤️";
-  h.style.left = x + "px";
-  h.style.top = y + "px";
+  h.style.left = e.clientX + "px";
+  h.style.top = e.clientY + "px";
   h.style.fontSize = (14 + Math.random() * 16) + "px";
   h.style.animationDuration = "2s";
   document.body.appendChild(h);
   setTimeout(() => h.remove(), 2000);
-}
-document.addEventListener("click", e => clickHeart(e.clientX, e.clientY));
-document.addEventListener("touchstart", e => {
-  const t = e.touches[0];
-  clickHeart(t.clientX, t.clientY);
 });
 
 </script>
